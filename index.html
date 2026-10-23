@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, inital-scale=1.0" />
+<title></title>
+<style type="text/css">
+
+</style>
+</head>
+<body>
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حاسبة العمر - خلود هاني</title>
+    <!-- خطوط جوجل -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #fce4ec, #f3e5f5);
+            padding: 20px;
+            direction: rtl;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            padding: 40px 35px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(156, 39, 176, 0.15), 0 10px 30px rgba(0,0,0,0.05);
+            max-width: 480px;
+            width: 100%;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: transform 0.3s ease;
+        }
+
+        .container:hover {
+            transform: translateY(-5px);
+        }
+
+        /* تخصيص اسم الطالبة */
+        .student-name {
+            font-size: 22px;
+            font-weight: 700;
+            color: #6a1b9a;
+            background: linear-gradient(135deg, #e1bee7, #f8bbd0);
+            display: inline-block;
+            padding: 8px 25px;
+            border-radius: 50px;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 10px rgba(106, 27, 154, 0.1);
+        }
+
+        h1 {
+            font-size: 28px;
+            color: #4a148c;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            color: #7b4b8a;
+            font-size: 15px;
+            margin-bottom: 30px;
+            border-bottom: 2px dashed #ce93d8;
+            padding-bottom: 15px;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+            text-align: right;
+        }
+
+        .input-group label {
+            display: block;
+            font-weight: 500;
+            color: #4a148c;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e1bee7;
+            border-radius: 16px;
+            font-size: 18px;
+            color: #333;
+            background: #fafafa;
+            transition: all 0.3s ease;
+            outline: none;
+            direction: ltr; /* لتنسيق التاريخ */
+        }
+
+        .input-group input:focus {
+            border-color: #9c27b0;
+            box-shadow: 0 0 0 4px rgba(156, 39, 176, 0.15);
+            background: #fff;
+        }
+
+        .btn-calculate {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #9c27b0, #6a1b9a);
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            font-size: 20px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(156, 39, 176, 0.3);
+            letter-spacing: 1px;
+        }
+
+        .btn-calculate:hover {
+            transform: scale(1.02);
+            box-shadow: 0 12px 28px rgba(106, 27, 154, 0.4);
+            background: linear-gradient(135deg, #7b1fa2, #4a148c);
+        }
+
+        .btn-calculate:active {
+            transform: scale(0.98);
+        }
+
+        /* نتيجة الحساب */
+        .result-box {
+            margin-top: 30px;
+            background: #f3e5f5;
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid #ce93d8;
+            min-height: 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            transition: all 0.4s ease;
+        }
+
+        .result-box .age-number {
+            font-size: 42px;
+            font-weight: 700;
+            color: #4a148c;
+            line-height: 1.2;
+        }
+
+        .result-box .age-details {
+            font-size: 18px;
+            color: #6a1b9a;
+            font-weight: 500;
+            margin-top: 5px;
+        }
+
+        .result-box .placeholder {
+            color: #9c27b0;
+            font-size: 16px;
+            opacity: 0.7;
+        }
+
+        .footer {
+            margin-top: 25px;
+            font-size: 14px;
+            color: #9e9e9e;
+        }
+
+        .footer span {
+            color: #9c27b0;
+            font-weight: 700;
+        }
+
+        /* رسالة الخطأ */
+        .error-msg {
+            color: #c62828;
+            background: #ffebee;
+            padding: 10px;
+            border-radius: 12px;
+            margin-top: 10px;
+            display: none;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- تخصيص الاسم هنا -->
+        <div class="student-name">✨ خلود هاني ✨</div>
+
+        <h1>📆 حاسبة العمر</h1>
+        <p class="subtitle">احسبي عمرك بدقة بالسنوات والأشهر والأيام</p>
+
+        <div class="input-group">
+            <label for="birthday">📅 تاريخ ميلادك</label>
+            <input type="date" id="birthday" max="2026-07-12">
+        </div>
+
+        <button class="btn-calculate" onclick="calculateAge()">احسبي عمري الآن</button>
+
+        <div class="result-box" id="resultBox">
+            <div class="placeholder">✨ انتظري نتيجة عمرك الدقيق هنا ✨</div>
+        </div>
+
+        <!-- رسالة خطأ مخفية -->
+        <div class="error-msg" id="errorMsg">⚠️ يرجى إدخال تاريخ ميلاد صحيح!</div>
+
+        <div class="footer">📱🇦 <span>خلود هاني</span> · مشروع حاسبة العمر</div>
+    </div>
+
+    <script>
+        function calculateAge() {
+            const birthdayInput = document.getElementById('birthday');
+            const resultBox = document.getElementById('resultBox');
+            const errorMsg = document.getElementById('errorMsg');
+
+            // إخفاء الخطأ عند إعادة المحاولة
+            errorMsg.style.display = 'none';
+
+            const birthdayValue = birthdayInput.value;
+
+            if (!birthdayValue) {
+                errorMsg.style.display = 'block';
+                resultBox.innerHTML = `<div class="placeholder">📌 اختاري تاريخ ميلادك أولاً</div>`;
+                return;
+            }
+
+            const birthDate = new Date(birthdayValue);
+            const today = new Date();
+
+            // التحقق من أن التاريخ ليس في المستقبل
+            if (birthDate > today) {
+                errorMsg.style.display = 'block';
+                errorMsg.textContent = '⚠️ تاريخ الميلاد لا يمكن أن يكون في المستقبل!';
+                resultBox.innerHTML = `<div class="placeholder">🤔 يبدو أنكِ لم تولدي بعد!</div>`;
+                return;
+            }
+
+            // حساب الفرق
+            let years = today.getFullYear() - birthDate.getFullYear();
+            let months = today.getMonth() - birthDate.getMonth();
+            let days = today.getDate() - birthDate.getDate();
+
+            // تصحيح الأشهر والأيام
+            if (days < 0) {
+                months--;
+                // حساب عدد الأيام في الشهر السابق
+                const previousMonth = new Date(today.getFullYear(), today.getMonth(), 0);
+                days += previousMonth.getDate();
+            }
+
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+
+            // عرض النتيجة المخصصة
+            let ageText = '';
+            if (years === 0 && months === 0 && days === 0) {
+                ageText = '🎉 اليوم هو عيد ميلادكِ! كل عام وأنتِ بخير يا خلود! 🎂';
+            } else {
+                ageText = `
+                    <div class="age-number">${years} سنة</div>
+                    <div class="age-details">و ${months} شهراً و ${days} يوماً</div>
+                    <div style="margin-top:10px; font-size:15px; color:#7b4b8a;">🧮 عمرك بالشهور: ${(years * 12) + months} شهراً</div>
+                `;
+            }
+
+            resultBox.innerHTML = ageText;
+            // إعادة ضبط نص الخطأ إذا كان ظاهراً
+            errorMsg.textContent = '⚠️ يرجى إدخال تاريخ ميلاد صحيح!';
+        }
+
+        // إضافة حدث عند الضغط على Enter في حقل الإدخال
+        document.getElementById('birthday').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                calculateAge();
+            }
+        });
+
+        // تعيين حد أقصى للتاريخ تلقائياً (ليس ضرورياً لكنه مفيد)
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('birthday').setAttribute('max', today);
+        });
+    </script>
+
+</body>
+</html>
+<script type="text/javascript">
+(function() {
+
+})();
+</script>
+</body>
+</html>
