@@ -1,309 +1,490 @@
 <!DOCTYPE html>
-<html>
+<html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, inital-scale=1.0" />
-<title></title>
-<style type="text/css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>أكواد منصة البرمجة والثقافة المالية - الصف الثاني الثانوي</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family:'Cairo',sans-serif; }
+  body {
+    min-height:100vh;
+    background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    display:flex; align-items:center; justify-content:center;
+    padding:20px; color:#fff;
+  }
+  .card {
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(14px);
+    border:1px solid rgba(255,255,255,0.18);
+    border-radius:22px;
+    max-width:520px; width:100%;
+    padding:30px 25px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.45);
+    text-align:center;
+    animation: fadeIn 0.8s ease;
+  }
+  @keyframes fadeIn { from{opacity:0; transform:translateY(25px);} to{opacity:1; transform:translateY(0);} }
 
+  .photo {
+    width:150px; height:170px;
+    border-radius:14px;
+    object-fit:cover;
+    border:4px solid #00c6ff;
+    box-shadow:0 0 25px rgba(0,198,255,0.7);
+    margin:0 auto 14px;
+    display:block;
+  }
+  h1 { font-size:1.2rem; color:#fff; margin-bottom:4px; }
+  .subtitle { font-size:0.9rem; color:#00c6ff; font-weight:700; margin-bottom:2px; }
+  .subtitle2 { font-size:0.8rem; color:#cfe9ff; margin-bottom:4px; }
+  .school { font-size:0.85rem; color:#ffd76e; font-weight:700; margin-bottom:10px; }
+  .phones { font-size:0.8rem; color:#9be7ff; line-height:1.7; margin-bottom:18px; direction:rtl; }
+  .phones span { display:block; }
+
+  .divider {
+    height:1px; background: linear-gradient(to left, transparent, #00c6ff, transparent);
+    margin: 12px 0 20px;
+  }
+
+  label { display:block; text-align:right; font-size:0.9rem; margin-bottom:8px; color:#dff6ff; font-weight:600; }
+  input[type="text"] {
+    width:100%; padding:14px 16px; border-radius:14px;
+    border:2px solid rgba(0,198,255,0.4);
+    background: rgba(255,255,255,0.1);
+    color:#fff; font-size:1.1rem; font-weight:700; letter-spacing:1px;
+    text-align:center; outline:none; transition:0.3s;
+  }
+  input[type="text"]::placeholder { color:#9fc9d9; font-weight:400; letter-spacing:0; }
+  input[type="text"]:focus { border-color:#00c6ff; background:rgba(0,198,255,0.12); box-shadow:0 0 15px rgba(0,198,255,0.4); }
+
+  button {
+    width:100%; margin-top:14px; padding:14px;
+    border:none; border-radius:14px; cursor:pointer;
+    background: linear-gradient(135deg,#00c6ff,#0072ff);
+    color:#fff; font-size:1.1rem; font-weight:900; letter-spacing:0.5px;
+    transition:0.3s; box-shadow:0 8px 20px rgba(0,114,255,0.45);
+  }
+  button:hover { transform:translateY(-2px); box-shadow:0 12px 25px rgba(0,198,255,0.6); }
+  button:active { transform:scale(0.98); }
+
+  .result {
+    margin-top:20px; text-align:right;
+    background: rgba(0,198,255,0.1);
+    border:1px solid rgba(0,198,255,0.4);
+    border-radius:16px; padding:18px;
+    display:none; animation: fadeIn 0.5s ease;
+  }
+  .result.show { display:block; }
+  .result h3 { text-align:center; color:#00e0ff; margin-bottom:14px; font-size:1.05rem; }
+  .row { display:flex; justify-content:space-between; align-items:center; padding:9px 0; border-bottom:1px dashed rgba(255,255,255,0.15); font-size:0.95rem; }
+  .row:last-child { border-bottom:none; }
+  .row .key { color:#9be7ff; font-weight:700; }
+  .row .val { color:#fff; font-weight:700; text-align:left; direction:ltr; word-break:break-all; }
+  .val.name { direction:rtl; text-align:right; }
+
+  .copy-btn {
+    background:transparent; border:1px solid #00c6ff; color:#00c6ff;
+    width:auto; padding:3px 10px; font-size:0.75rem; border-radius:8px;
+    margin-right:6px; box-shadow:none; margin-top:0;
+  }
+  .copy-btn:hover { background:#00c6ff; color:#001f2f; transform:none; box-shadow:none; }
+
+  .error {
+    margin-top:18px; padding:14px; border-radius:14px;
+    background: rgba(255,80,80,0.15); border:1px solid rgba(255,80,80,0.5);
+    color:#ffb3b3; font-weight:700; font-size:0.95rem; display:none;
+  }
+  .error.show { display:block; animation: fadeIn 0.4s; }
+
+  .footer { margin-top:22px; font-size:0.75rem; color:#8fb8cc; line-height:1.6; }
 </style>
 </head>
 <body>
-<!DOCTYPE html>
-<html lang="ar">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>حاسبة العمر - خلود هاني</title>
-    <!-- خطوط جوجل -->
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Tajawal', sans-serif;
-        }
 
-        body {
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: linear-gradient(135deg, #fce4ec, #f3e5f5);
-            padding: 20px;
-            direction: rtl;
-        }
+<div class="card">
 
-        .container {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(10px);
-            padding: 40px 35px;
-            border-radius: 30px;
-            box-shadow: 0 20px 60px rgba(156, 39, 176, 0.15), 0 10px 30px rgba(0,0,0,0.05);
-            max-width: 480px;
-            width: 100%;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            transition: transform 0.3s ease;
-        }
+  <img src="https://cdn.jsdelivr.net/gh/mhshahen6/mh_photo@main/1770841296798.webp" alt="المهندس محمد شاهين" class="photo">
 
-        .container:hover {
-            transform: translateY(-5px);
-        }
+  <h1>المهندس محمد محمود شاهين</h1>
+  <div class="subtitle">خبير البرمجة والذكاء الاصطناعي</div>
+  <div class="subtitle2">بالتربية والتعليم – إدارة قلين التعليمية</div>
+  <div class="school">مدرسة الشهيد أحمد صلاح الدين مالك</div>
 
-        /* تخصيص اسم الطالبة */
-        .student-name {
-            font-size: 22px;
-            font-weight: 700;
-            color: #6a1b9a;
-            background: linear-gradient(135deg, #e1bee7, #f8bbd0);
-            display: inline-block;
-            padding: 8px 25px;
-            border-radius: 50px;
-            margin-bottom: 20px;
-            letter-spacing: 1px;
-            box-shadow: 0 4px 10px rgba(106, 27, 154, 0.1);
-        }
+  <div class="phones">
+    <span>📱 01029966799</span>
+    <span>📱 01043647668</span>
+    <span>📱 01013077856</span>
+  </div>
 
-        h1 {
-            font-size: 28px;
-            color: #4a148c;
-            margin-bottom: 8px;
-            font-weight: 700;
-        }
+  <div class="divider"></div>
 
-        .subtitle {
-            color: #7b4b8a;
-            font-size: 15px;
-            margin-bottom: 30px;
-            border-bottom: 2px dashed #ce93d8;
-            padding-bottom: 15px;
-        }
+  <label for="codeInput">🔍 أدخل كود الطالب للاستعلام</label>
+  <input type="text" id="codeInput" placeholder="مثال: 471479557" inputmode="numeric" autocomplete="off">
 
-        .input-group {
-            margin-bottom: 25px;
-            text-align: right;
-        }
+  <button onclick="searchStudent()">استعلام</button>
 
-        .input-group label {
-            display: block;
-            font-weight: 500;
-            color: #4a148c;
-            margin-bottom: 8px;
-            font-size: 16px;
-        }
+  <div class="result" id="resultBox">
+    <h3>✅ بيانات الطالب</h3>
+    <div class="row"><span class="key">الاسم</span><span class="val name" id="rName">-</span></div>
+    <div class="row"><span class="key">المستخدم</span><span class="val"><span id="rUser">-</span> <button class="copy-btn" onclick="copyText('rUser')">نسخ</button></span></div>
+    <div class="row"><span class="key">كلمة المرور</span><span class="val"><span id="rPass">-</span> <button class="copy-btn" onclick="copyText('rPass')">نسخ</button></span></div>
+  </div>
 
-        .input-group input {
-            width: 100%;
-            padding: 15px 20px;
-            border: 2px solid #e1bee7;
-            border-radius: 16px;
-            font-size: 18px;
-            color: #333;
-            background: #fafafa;
-            transition: all 0.3s ease;
-            outline: none;
-            direction: ltr; /* لتنسيق التاريخ */
-        }
+  <div class="error" id="errorBox"></div>
 
-        .input-group input:focus {
-            border-color: #9c27b0;
-            box-shadow: 0 0 0 4px rgba(156, 39, 176, 0.15);
-            background: #fff;
-        }
+  <div class="footer">
+    أكواد منصة البرمجة والثقافة المالية<br>
+    الصف الثاني الثانوي – 2025
+  </div>
 
-        .btn-calculate {
-            width: 100%;
-            padding: 16px;
-            background: linear-gradient(135deg, #9c27b0, #6a1b9a);
-            color: #fff;
-            border: none;
-            border-radius: 50px;
-            font-size: 20px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 20px rgba(156, 39, 176, 0.3);
-            letter-spacing: 1px;
-        }
+</div>
 
-        .btn-calculate:hover {
-            transform: scale(1.02);
-            box-shadow: 0 12px 28px rgba(106, 27, 154, 0.4);
-            background: linear-gradient(135deg, #7b1fa2, #4a148c);
-        }
+<script>
+/* ================= بيانات الطلاب ================= */
+const students = [
+  {code:"471479557", name:"ﺍﺑﺮﺍﻫﻴﻢ ﺟﻤﺎﻝ ﺍﺑﺮﺍﻫﻴﻢ ﻣﺤﻤﺪ ﺷﻮﻕ", user:"471479557", pass:"wG!q9fB9"},
+  {code:"486458834", name:"إبراهيم سامى احمد إبراهيم سعد", user:"", pass:""},
+  {code:"463576646", name:"ﺍﺑﺮﺍﻫﻴﻢ يسري ﺑﺴﻴﻮﻧﻲ ﺑﺴﻴﻮﻧﻲ ﻋﻠﻲ", user:"463576646", pass:"H_hk9XXU"},
+  {code:"470827081", name:"ﺍﺣﻤﺪ ﺍﺑﺮﺍﻫﻴﻢ ﻓﺘﻮﺡ ﻋﺒﺪﷲ ﺍﻟﺤﺼﺎﻭﻯ", user:"470827081", pass:"v?cpEx27"},
+  {code:"485588346", name:"ﺍﺣﻤﺪ ﺍﺑﺮﺍﻫﻴﻢ ﻗﺪﺭﻯ ﻣﺤﻤﺪ التلاوى", user:"485588346", pass:"!6pcW5yr"},
+  {code:"463136812", name:"ﺍﺣﻤﺪ اشرف ﺍﺑﺮﺍﻫﻴﻢ ﺍﺣﻤﺪ ﺑﺴﻴﻮﻧﻰ", user:"463136812", pass:"8YPy?Tx2"},
+  {code:"482487260", name:"احمد اشرف عبد الستار الخولى", user:"", pass:""},
+  {code:"471472802", name:"ﺍﺣﻤﺪ ﺍﻟﺰﻧﺎﺗﻰ ﻋﺒﺪﺍﻟﺮﺣﻤﻦ ﻃﻪ ﺟﻨﺎﺡ", user:"471472802", pass:"2cGBbg!W"},
+  {code:"463236205", name:"ﺍﺣﻤﺪ ﺍﻟﺴﻌﻴﺪ ﺍﺑﺮﺍﻫﻴﻢ ﺍﻟﺴﻴﺪ ﺍﻏﺎ", user:"463236205", pass:"c4_FiyRr"},
+  {code:"485929894", name:"ﺍﺣﻤﺪ ﺑﺴﻴﻮﻧﻰ ﻃﻠﺤﻪ ﻣﺤﻤﺪ ﺍﻟﺤﻮﻓﻰ", user:"485929894", pass:"C27Ags!R"},
+  {code:"475972051", name:"ﺍﺣﻤﺪ ﺣﺎﺗﻢ ﺍﻟﺴﻴﺪ ﻋﺒﺪﺍﻟﻌﺰﻳﺰ الاختيار", user:"475972051", pass:"6w92!?Rr"},
+  {code:"471869723", name:"ﺍﺣﻤﺪ ﺣﻤﺪﻯ ﻣﺤﻤﻮﺩ ﻋﺒﺪ ﺍﻟﻠﻄﻴﻒ ﺣﺎﻣﺪ", user:"471869723", pass:"?zC5!6Rh"},
+  {code:"471869312", name:"ﺍﺣﻤﺪ ﺭﺷﺎﺩ ﻋﺒﺪ السلام ﺣﺴﻦ ﻋﻴسى", user:"471869312", pass:"vrk?R2nf"},
+  {code:"476239997", name:"ﺍﺣﻤﺪ ﺳﺎﻣﺢ ﻓﺘﺤﻰ ﺻﺪﻳﻖ ﻋﻘﺎﺭ", user:"476239997", pass:"p2!My5Mw"},
+  {code:"471868664", name:"ﺍﺣﻤﺪ ﺳﻌﻴﺪ ﻋﺒﺪﺍﻟﺮﺣﻤﻦ ﻋﺒﺪﺍﻟﻔﺘﺎﺡ ﻛﺮﺵ", user:"471868664", pass:"5d_6WeHC"},
+  {code:"460393943", name:"ﺍﺣﻤﺪ ﺷﻌﺒﺎﻥ ﻗﻄﺐ ﻋﺒﺪﺍﻟﻠﻄﻴﻒ الابياري", user:"460393943", pass:"_zV8FtFH"},
+  {code:"471479857", name:"ﺍﺣﻤﺪ ﺻﺎﻟﺢ ﻋﻠﻰ ﻣﺤﻤﺪ ﺣﺠﺎﺯﻯ", user:"471479857", pass:"?9pJrFmp"},
+  {code:"470755135", name:"ﺍﺣﻤﺪ ﻋﺒﺪﺍﻟﺮﺍﺯﻕ ﻋﺒﺪﷲ ﻋﺒﺪﺍﻟﻐﻔﺎﺭ ﺍﻟﻨﺠﺎﺭ", user:"470755135", pass:"_Cv8uh9L"},
+  {code:"471471678", name:"ﺍﺣﻤﺪ ﻋﺒﺪﺍﻟﻌﺎﻝ ﻓﻜﻴﻪ ﻣﻤﺪﻭﺡ ﻧﻌﻨﺎﻉ", user:"471471678", pass:"6bjM?zqV"},
+  {code:"471542245", name:"ﺍﺣﻤﺪ عبدالناصر ﻣﻌﻮﺽ ﻣﺤﻤﺪ ﺍﺑﻮﺷﻮﻕ", user:"471542245", pass:"r!i263Eg"},
+  {code:"463580408", name:"ﺃﺣﻤﺪ ﻋﺼﺎﻡ ﻋﻴﺪ ﺣﺴﻦ ﻋﺒﺪﺍﻟﻤﺠﻴﺪ", user:"463580408", pass:"F!RyvK8j"},
+  {code:"482487268", name:"ﺍﺣﻤﺪ ﻋﻠﻰ ﺳﻌﺪ ﻋﻠﻰ ﺍﺑﺮﺍﻫﻴﻢ ﻣﻨﺼﻮﺭ", user:"482487268", pass:"GNgwy!s4"},
+  {code:"486697538", name:"ﺍﺣﻤﺪ ﻋﻤﺎﺩ جلال ﺍﻟﺸﻮﺍﺩﻓﻲ ﺩﻭﻣﻪ", user:"486697538", pass:"MVZ!rp6m"},
+  {code:"473347821", name:"ﺍﺣﻤﺪ ﻣﺤﻤﺪ ﺭﺯﻕ ﻣﺼﻄﻔﻰ ﺍﻟﺴﺤﻴﻤﻰ", user:"473347821", pass:"UpA_fa6m"},
+  {code:"485640534", name:"ﺍﺣﻤﺪ ﻣﺤﻤﺪ ﺯﻫﻴﺮ ﻣﺤﻤﺪ ﺑﺮﻛﺎﺕ", user:"485640534", pass:"XX6nG?Cp"},
+  {code:"464403119", name:"ﺍﺣﻤﺪ ﻣﺤﻤﺪ ﻋﺎﻃﻒ ﺍﻟﺴﻌﻴﺪ ﻓﺰﻉ", user:"464403119", pass:"p!NbV9Qx"},
+  {code:"476056070", name:"ﺍﺣﻤﺪ ﻣﺤﻤﺪ ﻋﺒﺪﺍﻟﻌﺰﻳﺰ ﻫﺮﺍﺱ", user:"476056070", pass:"YtgP7u!B"},
+  {code:"471480884", name:"ﺍﺣﻤﺪ ﻣﺤﻤﺪ ﻋﺒﺪﺍﻟﻔﺘﺎﺡ ﻋﺒﺪﺍﻟﻘﺎﺩﺭ ﺍﺣﻤﺪ", user:"471480884", pass:"grSt_9V_"},
+  {code:"471869448", name:"ﺍﺣﻤﺪ ﻣﺤﻤﺪ ﻋﻠﻰ ﻋﺒﺪ ﺍﻟﻤﺠﻴﺪ عيسى", user:"471869448", pass:"UK2uSZ_m"},
+  {code:"485590552", name:"ﺍﺣﻤﺪ ﻣﺤﻤﺪ ﻋﻮﺽ ﻣﺤﻤﺪ ﺍﻟﺠﻤﻞ", user:"485590552", pass:"5ZPxZv_R"},
+  {code:"464527367", name:"ﺍﺣﻤﺪ ﻣﺤﻤﺪ ﻏﻨﺪﻯ ﻣﺤﻤﺪ الأطرش", user:"464527367", pass:"id5?za9Z"},
+  {code:"474017486", name:"ﺃﺣﻤﺪ ﻣﺤﻤﺪ ﻣﺤﻤﺪ ﺣﺴﻦ ﺃﺑﻮ ﺭﻳﺎ", user:"474017486", pass:"a!Wz5E4c"},
+  {code:"471279269", name:"ﺍﺣﻤﺪ ﻭﻟﻴﺪ ﻋﺒﺪﺍﻟﻌﺎﻝ ﻋﺒﺪﺍﻟﺒﺎﺳﻂ ﺣﺮﻓﻮﺵ", user:"471279269", pass:"4!6qzhVd"},
+  {code:"465192531", name:"ﺍﺣﻤﺪ ﻳﻮﺳﻒ ﻣﺒﺮﻭﻙ ﻋﺒﺪﺍﻟﺤﻤﻴﺪ ﺍﺑﻮﻣﺴﻠﻢ", user:"465192531", pass:"9Kp?8D4b"},
+  {code:"471479804", name:"ﺍﺩﻡ ﺍﺣﻤﺪ ﻣﺤﻤﺪ ﻋﺒﺎﺱ ﻋﻮﺍﺽ", user:"471479804", pass:"zpB?6dqY"},
+  {code:"463481537", name:"ﺍﺩﻫﻢ ﻋﺒﺪ ﷲ ﻣﺤﻤﺪ ﺍﻟﺴﻴﺪ ﻧﻮﺍﺭ", user:"463481537", pass:"M!75vJni"},
+  {code:"471479212", name:"ﺍﺳﺎﻣﻪ اشرف ﺧﻠﻴﻞ ﻋﻄﻴﻪ ﺍﻟﻨﺤﺮﺍﻭﻯ", user:"471479212", pass:"Tw2VW7N?"},
+  {code:"471597538", name:"ﺍﺳﺎﻣﻪ ﻣﺤﻤﺪ ﻣﺤﻤﺪ عبدالسلام ابوحمر", user:"471597538", pass:"?xb2TVwC"},
+  {code:"471059791", name:"آسر ﻣﺤﻤﺪ ﻓﺘﺤﻰ ﻗﻄﺐ ﻋﻄﻴﻪ", user:"471059791", pass:"p!T7VUNh"},
+  {code:"471472656", name:"ﺍﺳﻤﺎﻋﻴﻞ ياسر ﻣﺤﻤﺪ ﻋﺒﺪﺍﻟﻮﻫﺎﺏ المنسى", user:"471472656", pass:"hUW2Pc4?"},
+  {code:"464945918", name:"ﺍﻟﺒﺮﺍﺀ ﺭﺿﺎ ﻣﺼﻄﻔﻰ ﻋﻠﻰ ﺟﻨﺎﺡ", user:"464945918", pass:"T58?6jVb"},
+  {code:"471472774", name:"البراء عبدالرحمن عبدالسلام عبدالرازق حرفوش", user:"471472774", pass:"Jp7?a?8U"},
+  {code:"486705113", name:"ﻣﺤﻤﺪ ﻋﻤﺎﺩ جلال ﺍﻟﺸﻮﺍﺩﻓﻰ ﺩﻭﻣﺔ", user:"486705113", pass:"6gyW_e?W"},
+  {code:"471952545", name:"ﺍﻟﺴﻴﺪ ﻣﺤﻤﺪ ﺍﻟﺴﻴﺪ ﺍﻟﺒﺴﻴﻮﻧﻰ", user:"471952545", pass:"we_X57fm"},
+  {code:"469146859", name:"ﺍﻣﻴﺮ ﺑﺎﺳﻢ ﻋﺒﺪﺍﻟﺮﺍﺯﻕ ﺍﻟﺴﻴﺪ ﺍﻟﺒﺮﺑﺮﻯ", user:"469146859", pass:"Yr!7LJUB"},
+  {code:"486790687", name:"ﺍﻧﺲ ﺣﺴﻦ ﻣﺼﺒﺎﺡ ﺭﺿﻮﺍﻥ", user:"486790687", pass:"Q?kazs5T"},
+  {code:"464278551", name:"اﻧﺲ ﻓﺎﺭﻭﻕ ﻋﺒﺪﺍﻟﺮﺣﻤﻦ ﻣﺤﻤﺪ ﺣﺮﻓﻮﺵ", user:"464278551", pass:"f!N5U3mC"},
+  {code:"471872452", name:"ﺍﻧﺲ ﻣﺤﻤﻮﺩ ﺍﺣﻤﺪ ﻣﺤﻤﻮﺩ ﺍﺑﻮﺣﺴﻦ", user:"471872452", pass:"sVu3g_zQ"},
+  {code:"471479585", name:"ﺍﻧﻄﻮﻧﻴﻮﺱ ﻋﺼﺎﻡ ﺻﺒﺤﻰ ﺣﻨﺎ ﻭﺍﺻﻒ", user:"471479585", pass:"gtP?3NsT"},
+  {code:"471478364", name:"ﺍﻧﻮﺭ ﻣﺤﻤﻮﺩ ﺍﺣﻤﺪ ﺍﺣﻤﺪ الابيارى", user:"471478364", pass:"VYe?Mz8L"},
+  {code:"463422705", name:"ﺍﻳﺎﺩ ﺍﺳﻤﺎﻋﻴﻞ ﺍﺑﻮ ﺍﻟﻴﺰﻳﺪ ﺍﺳﻤﺎﻋﻴﻞ ﺣﺴﻦ", user:"463422705", pass:"xVz5N!dA"},
+  {code:"468166373", name:"ﺍﻳﺎﺩ ﺳﻌﻴﺪ ﺭﺯﻕ ﺳﻌﻴﺪ ﺑﺨﺎﺗﻰ", user:"468166373", pass:"_H?fw6PQ"},
+  {code:"485955751", name:"ﺍﻳﺎﺩ ﻫﺎﺭﻭﻥ ﻋﻮﺽ ﻋﺒﺪﺍﻟﻮﺍﺣﺪ ﺍﻟﻄﻨﺒﺎﺭﻯ", user:"485955751", pass:"!RfZUS3a"},
+  {code:"470817130", name:"ﺍﻳﻤﻦ ﺍﻟﺴﻌﻴﺪ ﻋﺒﺪﺍﻟﻠﻄﻴﻒ ﻣﺤﻤﺪ ﺍﻟﺤﺎﺭﺗﻲ", user:"470817130", pass:"i_W9mDFG"},
+  {code:"463481609", name:"ﺑﺎﺳﻞ ﻭﻟﻴﺪ ﻋﺒﺪ ﺍﻟﻤﺠﻴﺪ ﻋﺒﺪ ﺍﻟﻤﻘﺼﻮﺩ أبو الديار", user:"463481609", pass:"!DxvX!c5"},
+  {code:"470868601", name:"ﺑﺴﻴﻮﻧﻲ ﻣﺤﻤﺪ ﺑﺴﻴﻮﻧﻲ ﻋﺒﺪﺍﻟﻤﻘﺼﻮﺩ", user:"470868601", pass:"Sgdqtv8_"},
+  {code:"482502576", name:"بلال ﻟﻄﻔﻲ ﻣﻨﺼﻮﺭ ﻣﺤﻤﻮﺩ ﺍﻟﻄﻨﺠﺔ", user:"482502576", pass:"T3ugSP??"},
+  {code:"464947263", name:"ﺟﻤﺎﻝ ﺍﻟﺪﻳﻦ ﺍﺑﺮﺍﻫﻴﻢ ﺟﻤﺎﻝ ﺍﻟﺪﻳﻦ بسونى احمد", user:"464947263", pass:"v2_hRbBp"},
+  {code:"463222502", name:"ﺟﻤﺎﻝ ﻋﺰﻭﺯ ﺟﻤﺎﻝ ﺍﻟﺪﻳﻦ ﻣﺼﻄﻔﻰ ﺍﻟﻨﺠﺎﺭ", user:"463222502", pass:"?wyk4HfQ"},
+  {code:"485919466", name:"ﺟﻤﺎﻝ ﻣﺤﻤﺪ ﺟﻤﺎﻝ ﻋﺒﺪﺍﻟﻮﻫﺎﺏ ﻋﻄﻴﻪ", user:"485919466", pass:"4_!5JTkg"},
+  {code:"470755072", name:"ﺣﺎﺯﻡ ﺍﺣﻤﺪ ﺳﻌﻴﺪ ﺍﺑﻮﺍﻟﻴﺰﻳﺪ ﺍﻟﻔﻘﻰ", user:"470755072", pass:"Dq!vtFV2"},
+  {code:"471381849", name:"ﺣﺎﺯﻡ ﺻﺒﺤﻰ ﻣﺤﻤﺪ ﻋﺒﺪ ﺍﻟﻔﺘﺎﺡ ﻣﻌﻮﺽ", user:"471381849", pass:"htnD5_?F"},
+  {code:"476239951", name:"ﺣﺒﻴﺐ ﷲ ﻣﺤﻤﺪ ﻋﺒﺪﺍﻟﺠﻮﺍﺩ ﻋﻮﺽ ﻣﺤﻤﻮﺩ", user:"476239951", pass:"g_PTz!29"},
+  {code:"485641008", name:"ﺣﺴﺎﻡ ﺭﺿﺎ ﻣﺤﻤﺪ ﻣﺤﻤﺪ ﻧﻌﻨﺎﻋﻪ", user:"485641008", pass:"eZ7k?r4R"},
+  {code:"464404723", name:"ﺣﺴﻦ ﺣﺎﺗﻢ ﺣﺴﻦ ﻋﻠﻰ ﻫﻨﻮ", user:"464404723", pass:"gmrW2TX!"},
+  {code:"464942883", name:"ﺣﺴﻦ ﻋﺒﺎﺱ ﺣﺴﻦ ﻋﺒﺎﺱ ﺍﻟﻘﻠﻴﻮﺑﻰ", user:"464942883", pass:"fdAHZ2!f"},
+  {code:"471869323", name:"ﺣﺴﻦ ﻣﺤﻤﺪ ﻓﻮﺯﻯ ﻋﺒﺪﺍﻟﺤﻤﻴﺪ ﻳﻮﺳﻒ", user:"471869323", pass:"6Bd9Hs!f"},
+  {code:"485588796", name:"ﺧﺎﻟﺪ ﺍﻟﺤﺴﻴﻨﻰ ﻣﺤﻤﺪ ﻋﻠﻰ ﺍﻟﺸﺎﻋﺮ", user:"485588796", pass:"?tEUs?83"},
+  {code:"465063091", name:"ﺧﺎﻟﺪ ﻃﺎﻫﺮ ﻭﺟﺪﻱ ﻋﺒﺪ ﺍﻟﻔﺘﺎﺡ ﻋﺎﻣﺮ", user:"465063091", pass:"5WLnc_dn"},
+  {code:"471473093", name:"ﺭﺍﻣﻰ ﻃﺎﻫﺮ ﻣﺤﻰ ﻋﺒﺪﺍﻟﻐﻨﻰ ﺟﻨﺎﺡ", user:"471473093", pass:"myp?m93M"},
+  {code:"486811455", name:"ﺭﺿﺎ ﻋﻤﺎﺩ ﺣﺎﻣﺪ ﻣﺤﻤﻮﺩ ﺣﺎﻣﺪ", user:"486811455", pass:"_hs!8vbS"},
+  {code:"463597059", name:"ﺭﻳﺎﻥ ﻫﻴﺜﻢ ﺟﻤﺎﻝ ﺍﺑﺮﺍﻫﻴﻢ موسى", user:"463597059", pass:"5X_4nPss"},
+  {code:"470814192", name:"ﺯﻳﺎﺩ ﺍﺑﺮﺍﻫﻴﻢ ﻛﻤﺎﻝ ﻛﻤﺎﻝ ﺍﻟﺨﺎﻧﻜﻰ", user:"470814192", pass:"B_L4TnJ7"},
+  {code:"470870449", name:"ﺯﻳﺎﺩ ﺍﺣﻤﺪ ﻣﺤﻤﺪ ﻣﺤﻤﺪ ﺍﺑﻮﺳﺎﻟﻢ", user:"470870449", pass:"2ybgj_Hj"},
+  {code:"482497882", name:"ﺯﻳﺎﺩ ﺣﺎﺗﻢ ﻣﺤﻤﺪ ﻋﻮﺽ ﺍﻟﺰﻳﺎﺕ", user:"482497882", pass:"!i9AKKnW"},
+  {code:"467526394", name:"ﺯﻳﺎﺩ ﺣﻤﺎﺩﻩ ﺑﺴﻴﻮﻧﻲ ﻋﺒﺪﺍﻟﻌﺎﻃﻰ", user:"467526394", pass:"F_9Cgtmp"},
+  {code:"485886154", name:"ﺯﻳﺎﺩ ﻛﺮﻡ ﺟﻤﺎﻝ سلامة", user:"485886154", pass:"F?_zvD8X"},
+  {code:"471930362", name:"ﺯﻳﺎﺩ ﻛﻤﺎﻝ ﻣﻬﺪﻯ ﻣﺤﻤﺪ ﺑﻴﻮﻣﻰ ﺍﻟﻬﻠﺒﺎﻭﻯ", user:"471930362", pass:"Hy8kM_Yr"},
+  {code:"471479046", name:"ﺯﻳﺎﺩ ﻣﺤﻤﻮﺩ ﺑﻴﻠﻰ ﻣﺤﻤﺪ ﺍﻟﺒﻴﻠﻰ", user:"471479046", pass:"brEM8v!P"},
+  {code:"464462215", name:"ﺯﻳﺎﺩ ﻣﺼﻄﻔﻰ ﺟﻤﺎﻝ ﻣﺼﻄﻔﻰ ﺍﻟﺼﺒﺎﻍ", user:"464462215", pass:"CJ?S6kxT"},
+  {code:"471473020", name:"ﺯﻳﺎﺩ ياسر ﻣﻌﻮﺽ ﻋﺎﻣﺮ ﺍﻟﺸﻮﺭﻯ", user:"471473020", pass:"Qr?7kQv2"},
+  {code:"471478278", name:"ﺳﻌﺪ ﺳﻌﺪ ﻋﺒﺪﺍﻟﺴﺘﺎﺭ موسى ﺍﺑﻮ ﺍﻟﺪﻳﺎﺭ", user:"471478278", pass:"xy8EMXQ!"},
+  {code:"471596554", name:"ﺳﻌﻴﺪ بلال ﺍﻟﺴﻌﻴﺪ ﺍﺣﻤﺪ ﺣﻤﻴﺪﻩ", user:"471596554", pass:"2zaDR9?R"},
+  {code:"471902975", name:"ﺳﻌﻴﺪ ﻣﺤﻤﺪ ﺭﺟﺐ ﺳﻌﻴﺪ شريف", user:"471902975", pass:"wLXh3tJ_"},
+  {code:"471061034", name:"ﺳﻴﻒ ﺍﻟﺪﻳﻦ ﻓﻮﺯﻱ ﻣﺤﻤﻮﺩ ﻣﺤﻤﺪ ﻗﻄﺐ حجاج", user:"471061034", pass:"EZPBZ_s7"},
+  {code:"472102802", name:"ﺳﻴﻒ ﺳﺎﻣﻲ ﺭﺟﺐ ﻋﺒﺪ ﺍﻟﻤﻨﻌﻢ ﻋﺒﺪ ﷲ", user:"472102802", pass:"sQ_YYu82"},
+  {code:"481742648", name:"ﺳﻴﻒ ﻋﺼﺎﻡ ﻣﺨﺘﺎﺭ ﺍﺑﺮﺍﻫﻴﻢ ﻋﺒﺪﺍﻟﻌﺰﻳﺰ ﺍﻟﻮﺣﺶ", user:"481742648", pass:"WUsjJS!6"},
+  {code:"464527518", name:"ﺳﻴﻒ ﻋﻤﺎﺩ ﻣﺤﻤﺪ ﻣﺤﻤﺪ ﺣﺎﻣﺪ", user:"464527518", pass:"SpS_eW_9"},
+  {code:"477887371", name:"ﺷﻌﺒﺎﻥ ﺻﺎﺑﺮ ﺷﻌﺒﺎﻥ ﻋﺒﺪﺍﻟﺤﻤﻴﺪ ﺍﻟﺤﻤﺎﻣﻰ", user:"477887371", pass:"a_Z2_!_A"},
+  {code:"481698657", name:"ﺿﻴﺎﺀ ﻣﺤﻤﺪ ﺳﻤﻴﺮ ﻣﺼﻄﻔﻲ الاختيار", user:"481698657", pass:"?tj!aaZ4"},
+  {code:"463104338", name:"ﻃﺎﺭﻕ ﻋﺒﺪﺍﻟﺴﺘﺎﺭ ﻋﺒﺪﺍﻟﺮﺳﻮﻝ عبدالسلام الطنطاوى", user:"463104338", pass:"F?k7t?2D"},
+  {code:"471597169", name:"ﻃﻠﺤﻪ ﻣﺤﻤﺪ ﻃﻠﺤﻪ ﻋﺒﺪﺍﻟﻤﻘﺼﻮﺩ ﻃﺎﻳﻊ", user:"471597169", pass:"yKGQ6e?q"},
+  {code:"471478543", name:"ﻃﻪ ﻣﺤﻤﺪ ﻃﻪ ﻋﻮﺽ ﻛﺸﻚ", user:"471478543", pass:"?V3Qd62q"},
+  {code:"463728947", name:"ﻋﺎﺻﻢ ﺍﺣﻤﺪ ﻣﺤﻤﺪ ﻣﺤﻤﺪ ﻋﺒﺪ ﺍﻟﻜﺮﻳﻢ", user:"463728947", pass:"bkX_F!r9"},
+  {code:"471479717", name:"ﻋﺎﻣﺮ ﻣﺼﻄﻔﻰ ﺯﻳﻦ ﺍﻟﻌﺎﺑﺪﻳﻦ ﻋﺎﻣﺮ مصطفى", user:"471479717", pass:"8F?vJrzY"},
+  {code:"470682312", name:"ﻋﺒﺪ ﺍﻟﺤﻤﻴﺪ ﻣﺤﻤﻮﺩ ﻋﺒﺪ ﺍﻟﺤﻤﻴﺪ محمود الزلبوحى", user:"470682312", pass:"a!iMpR8T"},
+  {code:"464433291", name:"ﻋﺒﺪﺍﻟﺮﺣﻤﻦ ﺍﺳﺎﻣﻪ ﻣﻌﻮﺽ بسيونى الدقله", user:"464433291", pass:"Q?2PCJf5"},
+  {code:"464399310", name:"ﻋﺒﺪﺍﻟﺮﺣﻤﻦ ﺍﻟﺸﺎﻓﻌﻰ ﻣﺘﻮﻟﻰ ﺍﺑﻮﺍﻟﻤﺠﺪ حرفوش", user:"464399310", pass:"5k8h!QQ7"},
+  {code:"464528001", name:"ﻋﺒﺪﺍﻟﺮﺣﻤﻦ ﺣﺎﺗﻢ ﺑﺎﺷﺎ ﻣﺤﻤﺪ ﺍﻟﻤﻴﺮﻱ", user:"464528001", pass:"BX9zxD?Y"},
+  {code:"482051964", name:"ﻋﺒﺪﺍﻟﺮﺣﻤﻦ ﺣﺎﺗﻢ ﻋﺒﺪﺍﻟﺮﺣﻤﻦ ﻫﻨﺪﺍﻭﻯ ﺍﻟﺰﻋﻮﻳﻠﻰ", user:"482051964", pass:"UutTw2_i"},
+  {code:"483109740", name:"ﻋﺒﺪﺍﻟﺮﺣﻤﻦ ﺣﺴﺎﻡ ﻋﺒﺪﺍﻟﺤﻤﻴﺪ ﺑﺪﺭ ﻋﺒﺪﷲ", user:"483109740", pass:"F2Y5m?x8"},
+  {code:"471270261", name:"ﻋﺒﺪﺍﻟﺮﺣﻤﻦ شريف ﺍﺣﻤﺪ عبدالسلام نوار", user:"471270261", pass:"RCjAh!n5"},
+  {code:"464402914", name:"ﻋﺒﺪﺍﻟﺮﺣﻤﻦ شريف ﺍﻟﺴﻴﺪ ﺍﺣﻤﺪ ﻳﻌﻘﻮﺏ", user:"464402914", pass:"uuKk!83?"},
+  {code:"470754866", name:"ﻋﺒﺪﺍﻟﺮﺣﻤﻦ ﻋﺰﺕ ﺷﺎﻫﻴﻦ ﻣﺤﻤﺪ ﺷﺎﻫﻴﻦ", user:"470754866", pass:"Pt!2Vn68"},
+  {code:"471471617", name:"ﻋﺒﺪﺍﻟﺮﺣﻤﻦ ﻋﻠﻰ ﻋﺒﺪﺍﻟﺮﺣﻤﻦ ﻋﻠﻰ ﺍﻟﺸﻮﺭﻩ", user:"471471617", pass:"Ue?ZQ6Mj"},
+  {code:"485641478", name:"ﻋﺒﺪﺍﻟﺮﺣﻤﻦ ﻣﺤﻤﺪ ﺣﺴﻦ بسيونى عبدالكريم", user:"485641478", pass:"PZE6V_tm"},
+  {code:"473942973", name:"ﻋﺒﺪﺍﻟﺮﺣﻤﻦ ﻣﺤﻤﺪ ﻓﺆﺍﺩ ﻋﺒﺪﺍﻟﻌﺰﻳﺰ ﺍﻟﺪﻳﻬﻰ", user:"473942973", pass:"37!Pza4U"},
+  {code:"461125276", name:"ﻋﺒﺪﺍﻟﺮﺣﻤﻦ ﻣﺤﻤﺪ ﻣﺤﻤﺪ ﺍﺣﻤﺪ ﺍﻟﺼﺎﻭﻯ ابوعمر", user:"461125276", pass:"m_Q7D!a6"},
+  {code:"463596585", name:"ﻋﺒﺪﺍﻟﺮﺣﻤﻦ ﻣﺤﻤﻮﺩ ﻣﺤﻤﺪ ﺧﻤﻴﺲ أبوسمره", user:"463596585", pass:"DL!D!dv6"},
+  {code:"485641638", name:"ﻋﺒﺪﺍﻟﺮﺣﻤﻦ ﻣﺼﻄﻔﻰ ﺍﺣﻤﺪ ﻋﺒﺪﺍﻟﻤﺠﻴﺪ مصطفى", user:"485641638", pass:"?Skh8Nyw"},
+  {code:"486457526", name:"ﻋﺒﺪﺍﻟﺮﺣﻤﻦ ﻭﺍﺋﻞ ﻋﺒﺪﺍﻟﺮﺣﻤﻦ ﻋﺒﺪﺍﻟﻮﻫﺎﺏ جناح", user:"486457526", pass:"SCi_Y9dQ"},
+  {code:"485885232", name:"ﻋﺒﺪﺍﻟﻌﺰﻳﺰ ﺍﺣﻤﺪ ﻋﺒﺪ ﺍﻟﻌﺰﻳﺰ ﺍﺣﻤﺪ ﻧﻮﺍﺭ", user:"485885232", pass:"2VYe_V?e"},
+  {code:"464399450", name:"ﻋﺒﺪﺍﻟﻔﺘﺎﺡ ﺣﻤﺎﺩﻩ ﻋﺒﺪﺍﻟﻌﺰﻳﺰ ﺍﺣﻤﺪ ﺍﻟﺸﻮﺭﻩ", user:"464399450", pass:"bc_HJ_2!"},
+  {code:"464433747", name:"ﻋﺒﺪﷲ ﺣﻨﻴﺪﻕ ﻧﺠﺎﺡ ﻋﺒﺪﺍﻟﺤﻰ ﻓﺮﺝ", user:"464433747", pass:"Tr7?474_"},
+  {code:"471359753", name:"ﻋﺒﺪﷲ ﺭﺍﻣﻲ ﻣﺤﻤﺪ ﺯﻛﻲ ﺣﻤﻴﺪﻩ", user:"471359753", pass:"_7SdXTSm"},
+  {code:"470756130", name:"ﻋﺒﺪﷲ ﻣﺤﻤﺪ ﺷﻠﺒﻰ مرسى ربيع", user:"470756130", pass:"s4QAUP?6"},
+  {code:"485497088", name:"ﻋﺒﺪﷲ ﻣﺤﻤﺪ ﻣﺤﻤﻮﺩ ﻋﻮﺽ ﺍﻟﻤﺴﻴﺮﻯ", user:"485497088", pass:"Ap9QkC?c"},
+  {code:"463574858", name:"ﻋﺒﺪﷲ ﻣﺤﻤﻮﺩ ﻣﺤﻤﺪ ﺧﻤﻴﺲ ﺃﺑﻮ ﺳﻤﺮﺓ", user:"463574858", pass:"zfY4A!__"},
+  {code:"470754090", name:"ﻋﺒﺪﺍﻟﻤﻨﻌﻢ ﻋﺒﺪﺍﻟﺮﺣﻤﻦ ﻣﺤﻤﺪ ﺍﺑﺮﺍﻫﻴﻢ الخولى", user:"470754090", pass:"VK_4yHfb"},
+  {code:"462363585", name:"ﻋﺒﺪﺍﻟﻮﻫﺎﺏ ﻣﺒﺮﻭﻙ ﻓﺘﺤﻲ ﺍﺑﻮ ﺍﻟﻴﺰﻳﺪ عابدين", user:"462363585", pass:"AH5_hhDu"},
+  {code:"470868060", name:"ﻋﺰﺍﻟﺪﻳﻦ شريف ﺃﺑﻮﺍﻟﺴﻌﻮﺩ ﻋﺒﺪﺍﻟﻤﺠﻴﺪ إبراهيم", user:"470868060", pass:"?7Pp28P_"},
+  {code:"465017759", name:"ﻋﺰ ﻣﺤﻤﺪ ﻣﻌﻮﺽ ﻋﺰﺍﻟﻌﺮﺏ موسى", user:"465017759", pass:"ZMvbc!5e"},
+  {code:"464549875", name:"ﻋﺼﺎﻡ ﻣﺪﺣﺖ ﺍﻟﺴﻴﺪ ﻋﺒﺪﺍﻟﻔﺘﺎﺡ ﻛﺮﻭﺍﻥ", user:"464549875", pass:"!L?Fp3!5"},
+  {code:"470400254", name:"ﻋﻠﻲ ﺍﻟﺴﻴﺪ ﻋﻠﻲ ﺑﺴﻴﻮﻧﻰ ﺑﻨﻪ", user:"470400254", pass:"K_j?xQ6U"},
+  {code:"470400231", name:"ﻋﻠﻲ ﺍﻳﻤﻦ ﺍﺑﺮﺍﻫﻴﻢ ﻣﺤﻤﺪ عيسى", user:"470400231", pass:"ayDn?iT3"},
+  {code:"471596684", name:"ﻋﻠﻲ ﺳﺎﻫﺮ ﻋﻠﻲ ﻋﻨﺒﺮ ﺍﻟﺤﻠﻮ", user:"471596684", pass:"w!y58ZHP"},
+  {code:"470652206", name:"ﻋﻠﻲ ﻋﻤﺮﻭ ﻋﻠﻲ ﺑﺴﻴﻮﻧﻲ ﺍﻟﺸﺎﺫﻟﻲ", user:"470652206", pass:"qa7f!UWA"},
+  {code:"486357846", name:"ﻋﻠﻲ ﻣﺤﻤﺪ ﻋﻠﻲ ﺣﺴﻦ ﻋﺜﻤﺎﻥ", user:"486357846", pass:"PuLyB9!V"},
+  {code:"463728993", name:"ﻋﻠﻲ ﻣﺤﻤﻮﺩ ﻋﻠﻲ ﺍﺑﺮﺍﻫﻴﻢ ﺍﻟﺼﺎﻭﻯ", user:"463728993", pass:"btw4cVT!"},
+  {code:"477888576", name:"ﻋﻤﺎﺭ ﺍﺣﻤﺪ ﺣﺴﻦ ﺑﺴﻴﻮﻧﻲ ﺣﺴﻦ ﻋﺒﺪ الكريم", user:"477888576", pass:"V6VyGaD!"},
+  {code:"463590337", name:"ﻋﻤﺎﺭ ﻋﻠﻰ عيسى ﻋﻠﻰ ﺷﻮﻣﺎﻥ", user:"463590337", pass:"y?G32fLB"},
+  {code:"465183983", name:"ﻋﻤﺎﺭ ياسر ﺍﻟﺴﻴﺪ ﺍﺣﻤﺪ ﻧﻌﻨﺎﻋﻪ", user:"465183983", pass:"Cmcgy4x!"},
+  {code:"464528532", name:"ﻋﻤﺮ ﺍﺑﺮﺍﻫﻴﻢ ﺷﻌﺒﺎﻥ ﺍﺣﻤﺪ ﺑﺴﻴﻮﻧﻲ ﺣﺎﻣﺪ", user:"464528532", pass:"Hy!V44BC"},
+  {code:"469740406", name:"ﻋﻤﺮ ﺍﺣﻤﺪ ﺍﻟﻨﺒﻮﻯ ﺑﺴﻴﻮﻧﻰ ﻳﻮﺳﻒ عبدالحميد", user:"469740406", pass:"2SEh!yev"},
+  {code:"467341227", name:"ﻋﻤﺮ ﺍﺣﻤﺪ ﻓﺆﺍﺩ ﻋﺒﺪ ﺍﻟﻌﺰﻳﺰ ﺍﻟﺪﻳﻬﻰ", user:"467341227", pass:"Mu!wH2N9"},
+  {code:"460387306", name:"ﻋﻤﺮ ﺍﺣﻤﺪ ﻣﺤﻤﺪ ﻋﺒﺪ ﺍﻟﻌﺰﻳﺰ الاختيار", user:"460387306", pass:"cBi_c8Ae"},
+  {code:"471481034", name:"ﻋﻤﺮ ﺍﺳﻤﺎﻋﻴﻞ ﻣﺤﻤﺪ ﺍﺳﻤﺎﻋﻴﻞ ﺍﻟﻜﺮﺩﻯ", user:"471481034", pass:"jD9_eXg8"},
+  {code:"486168812", name:"ﻋﻤﺮ اشرف صلاح ﺍﻟﺪﻳﻦ ﻋﺒﺎﺱ ﺍﺑﻮ ﻣﺮﻳﻜﺐ", user:"486168812", pass:"yY3e8R_V"},
+  {code:"464172718", name:"ﻋﻤﺮ اشرف ﻋﺒﺪ ﺍﻟﻌﺰﻳﺰ ﻋﻄﻴﻪ ﻗﺎﺳﻢ", user:"464172718", pass:"YcWF9?JZ"},
+  {code:"464463784", name:"ﻋﻤﺮ أشرف ﻣﺤﻤﺪ ﻣﺤﻤﺪ ﺑﺮﺑﻮﺵ", user:"464463784", pass:"qgX45?nY"},
+  {code:"470755239", name:"ﻋﻤﺮ ﺑﺸﻴﺮ ﻣﻌﻮﺽ ﻋﺒﺪﺍﻟﺮﺍﺯﻕ ﺍﻟﻘﺰﺍﺯ", user:"470755239", pass:"h_gQ9?H9"},
+  {code:"471479083", name:"ﻋﻤﺮ ﺧﺎﻟﺪ ﻣﺤﻤﺪ ﻋﺒﺪ ﺍﻟﻐﻨﻲ النقراشي", user:"471479083", pass:"nFc52RV?"},
+  {code:"481941042", name:"ﻋﻤﺮ ﺳﺎﻣﺢ ﻋﻠﻰ ﻋﺒﺪﺍﻟﺮﺣﻤﻦ ﺑﻜﺮﻯ", user:"481941042", pass:"k6YCzJn!"},
+  {code:"476240081", name:"ﻋﻤﺮ شريف ﺍﻟﺴﻌﻴﺪ ﻣﺤﻤﻮﺩ ﻋﻄﻴﻪ", user:"476240081", pass:"6zA?z3c8"},
+  {code:"464399817", name:"ﻋﻤﺮ ﺻﺒﺤﻰ ﻣﺤﻤﺪ ﻋﻠﻰ ﺍﻟﺸﻨﺸﻮﺭﻯ", user:"464399817", pass:"3Dwsmqb!"},
+  {code:"465183932", name:"ﻋﻤﺮ عبدالسلام عبدالسلام ﺍﺣﻤﺪ ﺍﻟﻨﺠﺎﺭ", user:"465183932", pass:"sH8r?dwx"},
+  {code:"471471860", name:"ﻋﻤﺮ ﻋﺒﺪﺍﻟﻘﺎﺩﺭ ﻋﻄﺎ ﻣﺤﻤﺪ ﺍﻟﻜﺮﺩﻯ", user:"471471860", pass:"A!36xJZi"},
+  {code:"483109600", name:"ﻋﻤﺮ ﻋﻮﺽ ﻓﻮﺯﻯ ﻣﺤﻤﺪ ﺣﺴﻦ", user:"483109600", pass:"?9x!gcHG"},
+  {code:"470715261", name:"ﻋﻤﺮ ﻣﺎﺟﺪ ﻋﺒﺪﷲ ﺍﺑﻮ ﺯﻳﺪ", user:"470715261", pass:"tsqU4f?c"},
+  {code:"485497285", name:"ﻋﻤﺮ ﻣﺪﺣﺖ ﺍﺳﻤﺎﻋﻴﻞ ﻓﺘﺤﻰ ﻋﺒﺪ ﺍﻟﻘﻮﻯ", user:"485497285", pass:"RGv7_dLj"},
+  {code:"481624600", name:"ﻋﻤﺮ ﻣﺤﻤﺪ ﺍﺑﺮﺍﻫﻴﻢ ﻋﻠﻮﺍﻧﻰ ﺍﻟﺪﻋﻴﻜﻰ", user:"481624600", pass:"ngn6J!Dg"},
+  {code:"463590498", name:"عمر محمد عبد الوهاب عبد العزيز أبو إسماعيل", user:"", pass:""},
+  {code:"464402806", name:"ﻋﻤﺮ ﻣﺼﻄﻔﻰ ﻣﺤﻤﺪ ﻣﺼﻄﻔﻰ خضر", user:"464402806", pass:"FY!y_M?2"},
+  {code:"471478583", name:"ﻋﻤﺮ ﻣﻌﺮﻭﻑ ﺣﺴﻴﻦ ﻣﺤﻤﺪ ﻋﻠﻰ", user:"471478583", pass:"?DrN9ihS"},
+  {code:"494918594", name:"ﻋﻤﺮ ﻧﻈﻤﻰ ﺯﻛﺮﻳﺎ ﻣﺤﻤﺪ ﺍﺑﻮ ﻫﺮﺍﺱ", user:"494918594", pass:"?AtNf6TH"},
+  {code:"483109561", name:"ﻋﻤﺮ ﻭﺍﺋﻞ ﻋﺒﺪﺍﻟﻠﻄﻴﻒ ﻣﺤﻤﺪ ﺍﻟﺪﺳﻮﻗﻰ", user:"483109561", pass:"ms3V!QKZ"},
+  {code:"463377734", name:"ﻋﻤﺮ ﻭﻟﻴﺪ ﺍﺑﺮﺍﻫﻴﻢ ﺍﻟﺴﻴﺪ ﻗﻨﺪﻳﻞ", user:"463377734", pass:"m8H?S9Bj"},
+  {code:"485497380", name:"ﻋﻤﺮ يسرى جلال ﺍﻟﺴﻴﺪ ﺍﻟﻬﺠﻴﻦ", user:"485497380", pass:"4_QDss6S"},
+  {code:"464875936", name:"ﻋﻤﺮﻭ ﺧﻤﻴﺲ ﺑﺎﺷﺎ ﻋﺒﺪﺍﻟﺸﺎﻓﻲ ﻫﺎﺷﻢ", user:"464875936", pass:"Me_BRg4V"},
+  {code:"471472116", name:"ﻋﻤﺮﻭ ﻋﺒﺪﺍﻟﺤﻖ ﻋﺒﺪﺍﻟﻌﺰﻳﺰ ﻋﺒﺪﺍﻟﺠﻴﺪ ﻓﺰﻥ", user:"471472116", pass:"_P3SCgd5"},
+  {code:"476242815", name:"ﻋﻤﺮﻭ ﻣﺤﻤﻮﺩ ﺻﺎﻟﺢ ﺍﻟﺴﻴﺪ ﻫﺮﺍﺱ", user:"476242815", pass:"i6tLiWq!"},
+  {code:"471478501", name:"ﻓﺎﺩﻯ ﻓﻮﺯﻯ ملاك ﻟﺒﻴﺐ ﺍﺳﻌﺪ", user:"471478501", pass:"K?hCBZq8"},
+  {code:"471479120", name:"ﻓﺘﺤﻰ اشرف ﻓﺘﺤﻰ ﻣﺤﻤﺪ ﺍﻟﻨﺤﺮﺍﻭﻯ", user:"471479120", pass:"QkFAr7!v"},
+  {code:"508195555", name:"فتحى خالد محمد فتحى حميده", user:"", pass:""},
+  {code:"470821077", name:"ﻛﺮﻳﻢ ﻋﺒﺪﻩ ﺍﻟﺸﺎﻣﻠﻲ ﻋﺒﺪﺍﻟﻐﻔﺎﺭ ﺯﺍﻳﺪ", user:"470821077", pass:"5WDk!?UP"},
+  {code:"464517635", name:"ﻛﺮﻳﻢ ﻋﻄﻴﺔ ﺣﺴﻴﻦ ﻣﺨﺘﺎﺭ ﺣﺴﻦ الاختيار", user:"464517635", pass:"w!fJbFb3"},
+  {code:"471279530", name:"ﻛﺮﻳﻢ ﻣﺤﻤﺪ ﺣﺴﺎﻧﻴﻦ ﺣﺴﺎﻧﻴﻦ", user:"471279530", pass:"B48Mmn_r"},
+  {code:"467578893", name:"ﻛﺮﻳﻢ ﻣﺴﻌﺪ ﺍﺑﺮﺍﻫﻴﻢ ﺍﺣﻤﺪ ﺷﻠﺒﻲ", user:"467578893", pass:"4Y_zybmS"},
+  {code:"465078601", name:"ﻛﻤﺎﻝ ﺭﺿﺎ ﻛﺎﻣﻞ مرسى سالم", user:"465078601", pass:"dvg8p!8P"},
+  {code:"463144818", name:"ﻣﺎﺯﻥ ﺍﺑﺮﺍﻫﻴﻢ ﺍﻟﺴﻴﺪ ﺍﺑﺮﺍﻫﻴﻢ ﺍﻟﻬﺠﻴﻦ", user:"463144818", pass:"9EfYbDc?"},
+  {code:"464875982", name:"ﻣﺎﺯﻥ ﺍﻟﺴﻴﺪ ﺻﺎﺑﺮ ﻋﺒﺪﺍﻟﻌﺰﻳﺰ ﺍﻟﻌﻘﺪﺓ", user:"464875982", pass:"EU?5u?qS"},
+  {code:"470400284", name:"ﻣﺎﺯﻥ ﻣﺤﻤﻮﺩ ﺍﺑﺮﺍﻫﻴﻢ ﻣﺤﻤﺪ ﺍﻟﻨﺸﻴﻠﻰ", user:"470400284", pass:"?wL5P7Qc"},
+  {code:"469663566", name:"ﻣﺤﺮﻡ ﻋﺒﺪﻩ ﻣﺤﻤﺪ ﺣﺴﻦ ﺍﺑﻮﻫﻨﻄﺶ", user:"469663566", pass:"eC?Ec_2m"},
+  {code:"485589096", name:"ﻣﺤﺴﻦ ﺍﺣﻤﺪ ﻣﺤﺴﻦ ﺍﺣﻤﺪ ﻧﻮﺍﺭ", user:"485589096", pass:"?5WvkmDW"},
+  {code:"464399486", name:"ﻣﺤﻤﺪ ﺍﺑﺮﺍﻫﻴﻢ ﺧﻴﺮﻯ ﺍﺑﺮﺍﻫﻴﻢ ﺍﺑﻮﻋﻠﻰ", user:"464399486", pass:"UqFNs4!9"},
+  {code:"471555758", name:"محمد إبراهيم محمد على بنه", user:"", pass:""},
+  {code:"470760188", name:"ﻣﺤﻤﺪ ﺍﺣﻤﺪ ﺍﺑﺮﺍﻫﻴﻢ ﺣﺴﻦ عيسى", user:"470760188", pass:"sVQ?xx7W"},
+  {code:"463590243", name:"ﻣﺤﻤﺪ ﺍﺣﻤﺪ ﺳﻌﺪ ﺍﻟﺼﺎﻭﻯ ﺟﺎﺩﷲ", user:"463590243", pass:"XXQ?7ABb"},
+  {code:"460381408", name:"ﻣﺤﻤﺪ ﺍﺣﻤﺪ ﻋﺒﺪ ﺍﻟﻔﺘﺎﺡ ﺗﻮﻓﻴﻖ ﺣﺴﻴﻦ", user:"460381408", pass:"cfa!Rr3s"},
+  {code:"464368501", name:"ﻣﺤﻤﺪ ﺍﺣﻤﺪ ﻋﻠﻰ ﻋﺒﺪ ﺍﻟﻤﺠﻴﺪ عيسى", user:"464368501", pass:"fGh!J8je"},
+  {code:"485642038", name:"ﻣﺤﻤﺪ ﺍﺳﺎﻣﻪ ﻛﻤﺎﻝ ﻋﺒﺪﺍﻟﻌﺰﻳﺰ ﺍﻟﺼﻔﺘﻰ", user:"485642038", pass:"_bzt7UT_"},
+  {code:"467329572", name:"ﻣﺤﻤﺪ ﺍﺳﻌﺪ ﺍﺑﺮﺍﻫﻴﻢ ﻋﺒﺪﺍﻟﻤﺠﻴﺪ الشرقاوي", user:"467329572", pass:"F?A37vdm"},
+  {code:"464861122", name:"ﻣﺤﻤﺪ اسلام ﻋﺒﺪﺍﻟﺮﺣﻴﻢ ﻣﺤﻤﺪ ﺍﻟﻌﺠﻴﺰﻯ", user:"464861122", pass:"_7mcLT67"},
+  {code:"481340669", name:"ﻣﺤﻤﺪ اسلام ﻣﺼﻄﻔﻰ ﻋﺒﺪﺍﻟﻌﺰﻳﺰ عبدالكريم", user:"481340669", pass:"ux_WYtP6"},
+  {code:"471867302", name:"ﻣﺤﻤﺪ اشرف ﻣﺤﺮﻭﺱ ﻋﻄﻴﻪ ﺍﻟﻌﺎﺩﻟﻰ", user:"471867302", pass:"NdC_8A4p"},
+  {code:"471479831", name:"ﻣﺤﻤﺪ اشرف ﻣﺤﻤﺪ ﺍﺣﻤﺪ ﻣﺒﺮﻭﻙ", user:"471479831", pass:"2Y!uj!Sr"},
+  {code:"471278184", name:"ﻣﺤﻤﺪ ﺍﻟﺴﻴﺪ ﺍﺑﻮﺍﻟﻴﺰﻳﺪ ﻋﺒﺪﺍﻟﺴﺘﺎﺭ ﺍﻟﺪﻳﻬﻲ", user:"471278184", pass:"fMJ!bH6?"},
+  {code:"473989784", name:"ﻣﺤﻤﺪ ﺍﻟﺴﻴﺪ ﺟﻤﺎﻝ ﺍﺳﻤﺎﻋﻴﻞ ﺳﻌﺪ", user:"473989784", pass:"sLQK6w_5"},
+  {code:"472899828", name:"ﻣﺤﻤﺪ ﺍﻟﺴﻴﺪ ﻣﺤﻤﺪ ﻋﻄﺎﷲ", user:"472899828", pass:"grY_cB72"},
+  {code:"464875962", name:"ﻣﺤﻤﺪ ﺍﻳﻬﺎﺏ عبداللاه ﻋﺒﺪﺍﻟﻘﻮﻱ ﻋﺒﺪﻩ", user:"464875962", pass:"8vH7WjD_"},
+  {code:"486790652", name:"ﻣﺤﻤﺪ ﺍﻳﻬﺎﺏ ﻋﺒﺪﺍﻟﻨﺒﻰ ﻣﺤﻤﺪ عبدالمقصود", user:"486790652", pass:"n_N8ChJv"},
+  {code:"464946240", name:"ﻣﺤﻤﺪ ﺍﻳﻬﺎﺏ ﻣﺤﻤﺪ ﻃﻠﺤﻪ ﺍﻟﺤﻮﻓﻰ", user:"464946240", pass:"6!yauRTS"},
+  {code:"467329647", name:"ﻣﺤﻤﺪ ﺑﺎﺳﻢ ﺍﻣﺎﻡ ﻋﺒﺪﺍﻟﻠﻄﻴﻒ ﺍﻟﻄﻨﻄﺎﻭﻱ", user:"467329647", pass:"p8Dr_CXH"},
+  {code:"482037819", name:"ﻣﺤﻤﺪ ﺣﺎﺗﻢ ﻣﺤﻤﻮﺩ ﻣﺼﻄﻔﻰ ﺍﻟﺨﺮﻗﺎﻧﻰ", user:"482037819", pass:"ZFm?R3Xa"},
+  {code:"486724982", name:"ﻣﺤﻤﺪ ﺣﺎﻣﺪ ﻋﺒﺪﺍﻟﻤﻨﺠﻰ ﺣﺎﻣﺪ ﺍﺣﻤﺪ ﺣﻴﺪﺭ", user:"486724982", pass:"?z3vpNXj"},
+  {code:"465183978", name:"ﻣﺤﻤﺪ ﺣﺴﺎﻡ ﺳﻌﺪ ﻣﺤﻤﺪ ﻫﺮﺍﺱ", user:"465183978", pass:"D83!z9Zt"},
+  {code:"470882313", name:"ﻣﺤﻤﺪ ﺣﻤﺎﺩﻩ ﺭﺷﺎﺩ ﻣﺤﻤﺪ ﺭﺑﻴﻊ", user:"470882313", pass:"V_?gLC5U"},
+  {code:"463561284", name:"ﻣﺤﻤﺪ ﺭﺑﻴﻊ ﻣﺤﻤﺪ ﺻﺎﻟﺢ ﺟﺎﺩ ﺍﻟﻜﺮﻳﻢ", user:"463561284", pass:"xdJ?d2B5"},
+  {code:"476239591", name:"ﻣﺤﻤﺪ ﺭﺟﺐ ﻋﺒﺪﺍﻟﻌﺰﻳﺰ ﻣﺤﻤﺪ ﺣﺴﻴﻦ", user:"476239591", pass:"iNLwfm9?"},
+  {code:"472102738", name:"ﻣﺤﻤﺪ ﺭﺟﺐ ﻋﺒﺪ ﺍﻟﻬﺎﺩﻱ ﻣﺤﻤﺪ ﻋﺘﻤﺎﻥ", user:"472102738", pass:"YtFc6hc?"},
+  {code:"471902994", name:"ﻣﺤﻤﺪ ﺭﺷﺪﻱ ﺭﺟﺐ ﺳﻌﻴﺪ شريف", user:"471902994", pass:"?5KfjnEY"},
+  {code:"463949765", name:"ﻣﺤﻤﺪ ﺭﺿﺎ ﻋﺒﺪ ﺍﻟﻤﻨﻌﻢ ﺍﺑﻮﻛﺮﺵ", user:"463949765", pass:"sr5!WHvR"},
+  {code:"470817409", name:"ﻣﺤﻤﺪ سلامه ﻧﻮﺡ سلامه قنديل", user:"470817409", pass:"RA3KG!fL"},
+  {code:"470754261", name:"ﻣﺤﻤﺪ ﺷﻌﺒﺎﻥ ﻳﻮﺳﻒ ﻳﻮﺳﻒ ﺟﻨﺎﺡ", user:"470754261", pass:"D3aE_Qme"},
+  {code:"471931180", name:"ﻣﺤﻤﺪ صلاح ﻣﺤﺮﻭﺱ ﻣﺤﻤﺪ ﺩﻭﻣﻪ", user:"471931180", pass:"Hqfv7Z_M"},
+  {code:"464528238", name:"ﻣﺤﻤﺪ ﻃﻠﻌﺖ ﺳﻌﺪ ﺍﻟﺴﻴﺪ ﻫﺮﺍﺱ", user:"464528238", pass:"gZcX_n8D"},
+  {code:"464431854", name:"ﻣﺤﻤﺪ ﻋﺎﺩﻝ ﺑﺪﺭ ﻣﺼﻄﻔﻲ ﺑﺪﺭ", user:"464431854", pass:"o5ecT?Ve"},
+  {code:"485642332", name:"ﻣﺤﻤﺪ ﻋﺒﺪﺍﻟﺮﺣﻤﻦ ﻣﺤﻤﺪ ﺍﻟﺴﻴﺪ ﺷﺤﺎﺗﻪ", user:"485642332", pass:"ys!Bn2fp"},
+  {code:"464403091", name:"ﻣﺤﻤﺪ ﻋﺒﺪﺍﻟﻐﻔﺎﺭ ﺍﻟﺴﻴﺪ ﺍﺣﻤﺪ ﻋﺎﺷﻮﺭ", user:"464403091", pass:"AHj3Gh!E"},
+  {code:"467355000", name:"ﻣﺤﻤﺪ ﻋﺒﺪﺍﻟﻠﻄﻴﻒ ﻋﻄﻴﻪ ﻋﺒﺪﺍﻟﻠﻄﻴﻒ ﺍﺑﻮﻋﻮﻑ", user:"467355000", pass:"!4Ktn!2c"},
+  {code:"464554118", name:"ﻣﺤﻤﺪ ﻋﺼﺎﻡ ﺍﻟﺴﻴﺪ ﻋﺒﺪﺍﻟﻔﺘﺎﺡ ﻛﺮﻭﺍﻥ", user:"464554118", pass:"?2FGcKg8"},
+  {code:"464403041", name:"ﻣﺤﻤﺪ علاء ﻣﺤﻤﺪ ﻣﺤﻤﺪ ﻧﺼﺎﺭ", user:"464403041", pass:"78WU!pt2"},
+  {code:"486783815", name:"ﻣﺤﻤﺪ ﻋﻤﺮﻭ ﺑﺴﻴﻮﻧﻲ ﺣﺴﻦ ﺑﺪﺭ", user:"486783815", pass:"J!R2L7Cv"},
+  {code:"464271776", name:"ﻣﺤﻤﺪ ﻋﻮﺽ ﺑﺎﺷﺎ ﻣﺤﻤﺪ ﺍﻟﻤﻴﺮﻱ", user:"464271776", pass:"W2Mr!5rt"},
+  {code:"470870522", name:"ﻣﺤﻤﺪ ﻣﺠﺪﻱ ﻋﺒﺪﺍﻟﺤﻤﻴﺪ ﻣﻨﺼﻮﺭ", user:"470870522", pass:"D8zF_snR"},
+  {code:"463668993", name:"ﻣﺤﻤﺪ ﻣﺤﺮﻡ ﻣﺤﻤﺪ ﺣﺴﻦ ﺍﺑﻮﻫﻨﻄﺶ", user:"463668993", pass:"GA8!8nH3"},
+  {code:"485789380", name:"ﻣﺤﻤﺪ ﻣﺤﺮﻭﺱ ﻣﺤﺮﻭﺱ ﺍﻟﺸﻮﺍﺩﻓﻰ ﺣﺒﻴﺐ", user:"485789380", pass:"jj_wKC4G"},
+  {code:"470870579", name:"ﻣﺤﻤﺪ ﻣﺤﻤﻮﺩ ﺍﺣﻤﺪ ﺍﺑﺮﺍﻫﻴﻢ ﻋﻤﺎﺭ", user:"470870579", pass:"xRb9f_vV"},
+  {code:"486564144", name:"ﻣﺤﻤﺪ ﻣﺤﻤﻮﺩ ﺭﺯﻕ ﻣﺤﻤﻮﺩ ﺣﺎﻣﺪ", user:"486564144", pass:"LPW87!m8"},
+  {code:"486339806", name:"ﻣﺤﻤﺪ ﻣﺤﻤﻮﺩ ﻣﺤﻤﺪ ﻣﺤﺴﻦ ﺣﺎﻣﺪ", user:"486339806", pass:"v?wqYK6t"},
+  {code:"470868228", name:"ﻣﺤﻤﺪ ﻣﺴﻌﺪ ﺍﺣﻤﺪ ﻣﺤﻤﺪ ﻣﻨﺼﻮﺭ", user:"470868228", pass:"uXq9Xj?b"},
+  {code:"473295586", name:"ﻣﺤﻤﺪ ﻣﺼﻄﻔﻰ ﻣﺤﻤﺪ ﺣﺴﻦ ﻋﺒﺪﺍﻟﻌﺎﻃﻲ", user:"473295586", pass:"_zGRfV_8"},
+  {code:"486607481", name:"ﻣﺤﻤﺪ ﻣﻤﺪﻭﺡ ﻓﺮﺣﺎﺕ ﻣﺤﻤﻮﺩ ﺍﻟﺤﺸﺎﺵ", user:"486607481", pass:"3a!8W98H"},
+  {code:"482502682", name:"ﻣﺤﻤﺪ ﻣﻨﺼﻮﺭ ﺍﻟﺴﻴﺪ ﺣﺎﻣﺪ علام", user:"482502682", pass:"2qTpJph_"},
+  {code:"485589698", name:"ﻣﺤﻤﺪ نصر ﻋﺒﺪﺍﻟﻔﺘﺎﺡ ﻳﻮﺳﻒ ﺭﺍﺟﺢ", user:"485589698", pass:"B?27fLbT"},
+  {code:"464399313", name:"ﻣﺤﻤﺪ ﻫﺸﺎﻡ ﺍﺣﻤﺪ الشرنوبى الجلمه", user:"464399313", pass:"g5G?4hsF"},
+  {code:"471279265", name:"ﻣﺤﻤﺪ ﻭﺍﺋﻞ ﺳﻤﻴﺮ ﻋﺒﺪﺍﻟﻘﺎﺩﺭ ﺑﺪﺭ", user:"471279265", pass:"??T5U_aQ"},
+  {code:"486342519", name:"ﻣﺤﻤﺪ ﻭﻟﻴﺪ ﺳﻌﺪ ﻣﺼﻄﻔﻰ القاضى", user:"486342519", pass:"!6shMi!M"},
+  {code:"471278017", name:"ﻣﺤﻤﺪ ﻭﻟﻴﺪ ﻋﺒﺪﺍﻟﺤﻲ ﻋﻠﻲ ﺣﺴﻦ", user:"471278017", pass:"TEC_9ue?"},
+  {code:"486646760", name:"ﻣﺤﻤﺪ ياسر صلاح ﻣﺤﺴﻦ ﻧﺪﺍ", user:"486646760", pass:"?uYh84V2"},
+  {code:"477887410", name:"ﻣﺤﻤﺪ ﻳﺤﻴﻰ ﻓﺆﺍﺩ ﺍﺑﺮﺍﻫﻴﻢ ﺍﻟﺰﻋﻮﻳﻠﻰ", user:"477887410", pass:"YnKxM!n5"},
+  {code:"472579903", name:"ﻣﺤﻤﻮﺩ ﺍﻟﺴﻴﺪ ﻓﺮﺣﺎﺕ ﻋﻮﺽ ﺍﻟﺒﺪﻭﻱ", user:"472579903", pass:"!V9QsTrC"},
+  {code:"469951076", name:"ﻣﺤﻤﻮﺩ ﺷﻔﻴﻖ ﺍﺣﻤﺪ ﻣﺤﻤﻮﺩ ﺍﻟﻬﺠﻴﻦ", user:"469951076", pass:"a9r_YHRm"},
+  {code:"481941140", name:"ﻣﺤﻤﻮﺩ ﺻﻔﻮﺕ ﻣﺤﻤﺪ ﻋﺒﺪﺍﻟﻔﺘﺎﺡ ﺍﻟﺨﻮﻟﻰ", user:"481941140", pass:"B6w_WBaC"},
+  {code:"464403003", name:"ﻣﺤﻤﻮﺩ ﻋﺒﺪﺍﻟﻘﺎﺩﺭ ﻳﻮﺳﻒ ﻣﺤﻤﺪ ﻋﺒﺪﷲ", user:"464403003", pass:"a!Utt?w2"},
+  {code:"471271719", name:"ﻣﺤﻤﻮﺩ ﻋﻄﻴﺔ ﺍﺑﺮﺍﻫﻴﻢ ﺍﻟﺴﻴﺪ الاختيار", user:"471271719", pass:"_Sj9T8xM"},
+  {code:"473915182", name:"ﻣﺤﻤﻮﺩ ﻋﻤﺮﻭ ﻣﺤﻤﺪ ﻣﺤﻤﺪ ﺑﺨﺎﺗﻰ", user:"473915182", pass:"te8z!5Xg"},
+  {code:"469339165", name:"ﻣﺤﻤﻮﺩ ﻣﺤﻤﺪ ﻣﺤﻤﻮﺩ ﻋﻠﻰ ﺍﻟﺼﺎﻭﻯ", user:"469339165", pass:"3c?SX6q_"},
+  {code:"485497731", name:"ﻣﺤﻤﻮﺩ ﻫﻨﺪﺍﻭﻱ ﻓﺘﺤﻲ ﻫﻨﺪﺍﻭﻱ ﺷﻠﺒﻲ", user:"485497731", pass:"kXnr2mB_"},
+  {code:"463137042", name:"ﻣﺮﻭﺍﻥ ﺍﺑﺮﺍﻫﻴﻢ ﻋﻠﻰ ﺍﺣﻤﺪ الاطروش", user:"463137042", pass:"_K7mv9Pt"},
+  {code:"463222328", name:"ﻣﺮﻭﺍﻥ ﻓﺮﺝ ﺑﺪﻭﻯ ﺑﺪﻭﻯ ﺍﺑﺮﺍﻫﻴﻢ ﺍﻟﺤﻀﻴﺮﻯ", user:"463222328", pass:"VM!dbs2y"},
+  {code:"465062049", name:"ﻣﺮﻭﺍﻥ ﻣﺤﻤﺪ ﺧﻠﻴﻞ ﺍﻟﺴﻴﺪ ﻋﻠﻮﺍﻥ", user:"465062049", pass:"85KwCwA?"},
+  {code:"464381470", name:"ﻣﺼﻄﻔﻰ ﺍﺣﻤﺪ ﺷﻔﻴﻖ ﺍﺳﻤﺎﻋﻴﻞ ﺍﺑﻮﻋﻴﺎﻧﻪ", user:"464381470", pass:"w3V?2pRg"},
+  {code:"473908550", name:"ﻣﺼﻄﻔﻰ ﻋﺒﺎﺱ ﺳﻌﺪ ﻋﺒﺪ ﷲ ﺍﻟﻘﻤﺤﺎﻭﻯ", user:"473908550", pass:"9EsVQR_s"},
+  {code:"463144794", name:"ﻣﺼﻄﻔﻰ ﻋﻠﻰ ﺻﺎﻟﺢ ﻋﻠﻰ ﺻﺎﻟﺢ", user:"463144794", pass:"PkqbJ!r3"},
+  {code:"471869478", name:"مصطفى ﻣﺤﻤﺪ جلال ﺍﺑﺮﺍﻫﻴﻢ ﺑﺴﻴﻮﻧﻲ", user:"471869478", pass:"!Td6zwdq"},
+  {code:"472501053", name:"ﻣﺼﻄﻔﻰ ﻣﺤﻤﺪ ﺯﻛﺮﻳﺎ ﻣﺤﻤﺪ ﺣﺮﻓﻮﺵ", user:"472501053", pass:"L!f2JxWJ"},
+  {code:"472501128", name:"ﻣﺼﻄﻔﻰ ﻣﺤﻤﺪ ﻋﺒﺪﺍﻟﺸﺎﻓﻰ ﺣﺎﻣﺪ حرفوش", user:"472501128", pass:"3!D4emCQ"},
+  {code:"464528813", name:"ﻣﺼﻄﻔﻰ ﻣﺤﻤﺪ ﻣﺤﺴﻦ ﻣﺤﻤﺪ ﺣﺎﻣﺪ", user:"464528813", pass:"?QGC2ksQ"},
+  {code:"464402864", name:"ﻣﺼﻄﻔﻰ ﻣﺤﻤﺪ ﻧﺒﻴﻪ ﻣﺤﻤﺪ ﺟﻨﺎﺡ", user:"464402864", pass:"3b8Q4?sp"},
+  {code:"466320470", name:"مصطفى محمود محمد عبده وحيش", user:"", pass:""},
+  {code:"482502556", name:"ﻣﻌﺎﺫ ﺑﺴﻴﻮﻧﻲ منسي ﺑﺴﻴﻮﻧﻲ ﺷﻤﺲ الدين", user:"482502556", pass:"?x29gZVg"},
+  {code:"471023888", name:"ﻣﻌﺎﺫ ﺳﺎﻣﺢ ﻋﻠﻰ ﺑﺴﻴﻮﻧﻰ الاشمونى", user:"471023888", pass:"c8sXDxJ_"},
+  {code:"470821224", name:"ﻣﻌﺎﺫ ﺳﻌﺪ ﻋﺒﺪﺍﻟﻮﻧﻴﺲ ﺳﻌﺪ ﺍﻟﺤﺎﺭﺗﻲ", user:"470821224", pass:"_eu2TSwc"},
+  {code:"464399414", name:"ﻣﻌﺎﺫ ﻋﺎﺩﻝ ﺷﺤﺎﺗﻪ ﻋﺒﺪﻩ ﺍﻟﺨﻮﻟﻰ", user:"464399414", pass:"_xLpN3Hv"},
+  {code:"465120113", name:"ﻣﻌﺎﺫ ﻋﺒﺪ ﺍﻟﻌﺰﻳﺰ ﺍﺣﻤﺪ ﻣﺤﻤﺪ ﺩﺍﻭﺩ", user:"465120113", pass:"aY7K_Qa5"},
+  {code:"471208059", name:"ﻣﺆﻣﻦ ﻣﺤﻤﺪ ﻓﺘﺤﻰ ﻣﺤﻤﺪ ﺍﻟﺼﺤﺼﺎﺡ", user:"471208059", pass:"j4j?jQ!_"},
+  {code:"482502806", name:"ﻧﺎﺩﺭ ﻋﻮﺽ ﺍﻟﺴﻴﺪ ﻣﺤﻤﺪ ﺣﻤﺪ", user:"482502806", pass:"rj_5gR_k"},
+  {code:"471479446", name:"ﻫﺸﺎﻡ ﺻﺪﺍﻡ ﻋﻠﻰ ﻧﻮﺭﺍﻟﺪﻳﻦ ﺣﺴﻦ", user:"471479446", pass:"4K3xpW2!"},
+  {code:"471872620", name:"ﻭﺍﺋﻞ ﺍﺣﻤﺪ ﻣﺼﻄﻔﻰ ﻧﺪﺍ ناصر", user:"471872620", pass:"4d9?2FKg"},
+  {code:"463104422", name:"ﻭﺟﺪﻯ ﺯﺍﻳﺪ ﻭﺟﺪﻯ ﻋﻮﺽ ﺍﻟﻠﻠﻪ ﺍﻟﺴﻴﺪ ﺯﺍﻳﺪ", user:"463104422", pass:"Df8?A4pN"},
+  {code:"464942794", name:"ﻭﻓﻴﻖ ﻭﻟﻴﺪ ﻣﺤﻤﺪ ﻣﺤﻤﻮﺩ سلامه", user:"464942794", pass:"b2F_3_v4"},
+  {code:"485497563", name:"ﻳﺎﺳﻴﻦ ﺍﺑﺮﺍﻫﻴﻢ ﺍﺣﻤﺪ ﺧﻠﻴﻞ ﺍﺑﻮﻫﻨﻄﺶ", user:"485497563", pass:"?U9wrLH5"},
+  {code:"463669347", name:"ﻳﺎﺳﻴﻦ ﺻﺒﺤﻰ ﺍﺑﺮﺍﻫﻴﻢ ﻣﺤﻤﺪ ﻋﺘﻤﺎﻥ", user:"463669347", pass:"3Wx8!48f"},
+  {code:"476239445", name:"ﻳﺎﺳﻴﻦ ﻣﺤﻤﻮﺩ ﻧﺎﺻﻒ ﻋﺒﺪﺍﻟﻌﺎﻃﻰ ﻧﺎﺻﻒ", user:"476239445", pass:"5Fs_9FHK"},
+  {code:"462364160", name:"ﻳﺤﻴﻰ ﺍﺣﻤﺪ ﻋﺒﺪ ﺍﻟﺮﺍﻓﻊ ﺍﺑﺮﺍﻫﻴﻢ ﺍﺑﻮ ﻏﺮﺑﻴﻪ", user:"462364160", pass:"Fyz7_?EV"},
+  {code:"471869580", name:"يحيى ﺍﻳﻤﻦ ﻣﺤﻤﺪ ﺍﺑﺮﺍﻫﻴﻢ ﻋﻤﺎﺭ", user:"471869580", pass:"yvRU?Fy3"},
+  {code:"490718937", name:"ﻳﺤﻴﻰ ﻣﺤﻤﺪ ﺍﺣﻤﺪ ﻋﺒﺪ ﺍﻟﺼﺒﻮﺭ ﻣﺤﻤﺪ", user:"490718937", pass:"?9Z25xyj"},
+  {code:"463483237", name:"ﻳﺤﻴﻰ ﻣﺤﻤﺪ ﻋﺒﺪﺍﻟﻤﺤﺴﻦ ﻣﺤﻤﺪ عيسى", user:"463483237", pass:"xvx94!AX"},
+  {code:"465005380", name:"ﻳﺤﻴﻰ ﻭﻟﻴﺪ ﺍﻟﺴﻌﻴﺪ ﻣﺤﻤﺪ ﺍﻟﻌﺠﻴﺰﻯ", user:"465005380", pass:"?qVfai_3"},
+  {code:"482463982", name:"ﻳﻮﺳﻒ ﺍﺣﻤﺪ ﺍﺑﺮﺍﻫﻴﻢ ﺍﺣﻤﺪ ﺳﻨﺒﻞ", user:"482463982", pass:"gK?2B9ts"},
+  {code:"452058044", name:"ﻳﻮﺳﻒ ﺍﺣﻤﺪ ﻋﺒﺪ ﺍﻟﺮﺍﻓﻊ ﺍﺑﺮﺍﻫﻴﻢ ﺍﺑﻮ ﻏﺮﺑﻴﻪ", user:"452058044", pass:"n9GH!yz2"},
+  {code:"470904813", name:"ﻳﻮﺳﻒ ﺍﺣﻤﺪ ﻋﺒﺪﺍﻟﺮﺣﻤﻦ ﺭﺿﻮﺍﻥ", user:"470904813", pass:"aeLT_nQ4"},
+  {code:"465253111", name:"ﻳﻮﺳﻒ ﺍﻟﺴﻴﺪ ﺣﻤﻴﺪﻩ ﺣﻤﻴﺪﻩ ﺳﻠﻴﻤﺎﻥ", user:"465253111", pass:"7Phe2N!C"},
+  {code:"477790379", name:"ﻳﻮﺳﻒ ﺍﻟﺴﻴﺪ ﻣﺤﻤﺪ ﺍﻟﺴﻴﺪ ﻋﺒﺪﻩ", user:"477790379", pass:"Q?BBj95u"},
+  {code:"464528629", name:"ﻳﻮﺳﻒ ﺭﺿﺎ ﻣﺨﺘﺎﺭ ﺍﺣﻤﺪ ﺣﺎﻣﺪ", user:"464528629", pass:"T2rq?SQe"},
+  {code:"485644177", name:"ﻳﻮﺳﻒ ﺷﻔﻴﻖ ﻣﺤﻤﺪ ﺷﻬﺎﻭﻯ ﺷﻠﺒﻰ", user:"485644177", pass:"MQa4fyq_"},
+  {code:"464464356", name:"ﻳﻮﺳﻒ ﻋﺒﺪ ﺍﻟﻨﺒﻲ ﻣﺤﻤﺪ ﺣﺴﻦ ﻏﺒﻴﺶ", user:"464464356", pass:"S!Xjz62!"},
+  {code:"471479689", name:"ﻳﻮﺳﻒ ﻣﺒﺮﻭﻙ ﺍﺑﺮﺍﻫﻴﻢ ﺍﻟﺴﻴﺪ ﻋﻄﻴﻪ يعقوب", user:"471479689", pass:"YH?Uv5Tk"},
+  {code:"471559688", name:"ﻳﻮﺳﻒ ﻣﺤﻤﺪ ﺍﺑﻮ ﺍﻟﻨﺠﺎ ﻣﺤﻤﺪ ﺑﻠﻴﺢ", user:"471559688", pass:"QUX2Dm_6"},
+  {code:"471873008", name:"ﻳﻮﺳﻒ ﻣﺤﻤﺪ ﺍﺣﻤﺪ ﺳﻌﺪ ﺭﺩﺍﺩ", user:"471873008", pass:"!yCYHD5B"},
+  {code:"486696426", name:"ﻳﻮﺳﻒ ﻣﺤﻤﺪ ﺍﻟﺴﻴﺪ ﻣﺤﻤﺪ ﺍﻟﺒﺴﻴﻮﻧﻰ", user:"486696426", pass:"7tjRcA!m"},
+  {code:"463586119", name:"ﻳﻮﺳﻒ ﻣﺤﻤﺪ ﺫﻛﻲ ﻋﻄﻴﻪ ﺣﺎﻣﺪ", user:"463586119", pass:"v?Txd4Jp"},
+  {code:"464399884", name:"ﻳﻮﺳﻒ ﻣﺤﻤﺪ ﻓﺮﺣﺎﺕ ﻋﺜﻤﺎﻥ ﻓﺮﺣﺎﺕ", user:"464399884", pass:"2W6up!FT"},
+  {code:"473927444", name:"ﻳﻮﺳﻒ ﻣﺤﻤﺪ ﻣﺎﻫﺮ ﻋﺒﺪﷲ ﺍﻟﺤﺎﺭﺗﻰ", user:"473927444", pass:"XKeh4Vm_"},
+  {code:"471479485", name:"ﻳﻮﺳﻒ ﻣﺤﻤﻮﺩ نصر ﻣﺤﻤﻮﺩ ﻃﺎﺣﻮﻥ", user:"471479485", pass:"NFq2A!uM"},
+  {code:"482498132", name:"ﻳﻮﺳﻒ ﻫﺎﻧﻲ ﻣﺤﻤﻮﺩ ﻋﻄﻴﺔ ﻫﻨﻄﺶ", user:"482498132", pass:"G2Q_qp9r"},
+  {code:"470821245", name:"ﻳﻮﺳﻒ يسرى ﺍﻟﺴﻌﻴﺪ ﻋﺒﺪﺍﻟﺮﺅﻑ ﺍﻟﺤﺎﺭﺗﻲ", user:"470821245", pass:"B9KkAt!b"}
+];
 
-        .btn-calculate:active {
-            transform: scale(0.98);
-        }
+/* ================= منطق البحث ================= */
+const codeInput = document.getElementById('codeInput');
+const resultBox = document.getElementById('resultBox');
+const errorBox  = document.getElementById('errorBox');
 
-        /* نتيجة الحساب */
-        .result-box {
-            margin-top: 30px;
-            background: #f3e5f5;
-            border-radius: 20px;
-            padding: 20px;
-            border: 1px solid #ce93d8;
-            min-height: 80px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            transition: all 0.4s ease;
-        }
+function searchStudent(){
+  const code = codeInput.value.trim();
+  resultBox.classList.remove('show');
+  errorBox.classList.remove('show');
 
-        .result-box .age-number {
-            font-size: 42px;
-            font-weight: 700;
-            color: #4a148c;
-            line-height: 1.2;
-        }
+  if(!code){
+    showError('⚠️ من فضلك أدخل كود الطالب أولاً');
+    return;
+  }
 
-        .result-box .age-details {
-            font-size: 18px;
-            color: #6a1b9a;
-            font-weight: 500;
-            margin-top: 5px;
-        }
+  const student = students.find(s => s.code === code);
 
-        .result-box .placeholder {
-            color: #9c27b0;
-            font-size: 16px;
-            opacity: 0.7;
-        }
+  if(!student){
+    showError('❌ الكود غير موجود، تأكد من كتابة الكود بشكل صحيح');
+    return;
+  }
 
-        .footer {
-            margin-top: 25px;
-            font-size: 14px;
-            color: #9e9e9e;
-        }
+  if(!student.user || !student.pass){
+    showError('⚠️ بياناتك غير مكتملة على المنصة، يرجى مراجعة إدارة المدرسة');
+    return;
+  }
 
-        .footer span {
-            color: #9c27b0;
-            font-weight: 700;
-        }
+  document.getElementById('rName').textContent = student.name;
+  document.getElementById('rUser').textContent = student.user;
+  document.getElementById('rPass').textContent = student.pass;
+  resultBox.classList.add('show');
+}
 
-        /* رسالة الخطأ */
-        .error-msg {
-            color: #c62828;
-            background: #ffebee;
-            padding: 10px;
-            border-radius: 12px;
-            margin-top: 10px;
-            display: none;
-            font-weight: 500;
-        }
-    </style>
-</head>
-<body>
+function showError(msg){
+  errorBox.textContent = msg;
+  errorBox.classList.add('show');
+}
 
-    <div class="container">
-        <!-- تخصيص الاسم هنا -->
-        <div class="student-name">✨ خلود هاني ✨</div>
+function copyText(id){
+  const text = document.getElementById(id).textContent;
+  navigator.clipboard.writeText(text).then(()=>{
+    const btn = event.target;
+    const old = btn.textContent;
+    btn.textContent = '✓ تم';
+    setTimeout(()=> btn.textContent = old, 1200);
+  });
+}
 
-        <h1>📆 حاسبة العمر</h1>
-        <p class="subtitle">احسبي عمرك بدقة بالسنوات والأشهر والأيام</p>
-
-        <div class="input-group">
-            <label for="birthday">📅 تاريخ ميلادك</label>
-            <input type="date" id="birthday" max="2026-07-12">
-        </div>
-
-        <button class="btn-calculate" onclick="calculateAge()">احسبي عمري الآن</button>
-
-        <div class="result-box" id="resultBox">
-            <div class="placeholder">✨ انتظري نتيجة عمرك الدقيق هنا ✨</div>
-        </div>
-
-        <!-- رسالة خطأ مخفية -->
-        <div class="error-msg" id="errorMsg">⚠️ يرجى إدخال تاريخ ميلاد صحيح!</div>
-
-        <div class="footer">📱🇦 <span>خلود هاني</span> · مشروع حاسبة العمر</div>
-    </div>
-
-    <script>
-        function calculateAge() {
-            const birthdayInput = document.getElementById('birthday');
-            const resultBox = document.getElementById('resultBox');
-            const errorMsg = document.getElementById('errorMsg');
-
-            // إخفاء الخطأ عند إعادة المحاولة
-            errorMsg.style.display = 'none';
-
-            const birthdayValue = birthdayInput.value;
-
-            if (!birthdayValue) {
-                errorMsg.style.display = 'block';
-                resultBox.innerHTML = `<div class="placeholder">📌 اختاري تاريخ ميلادك أولاً</div>`;
-                return;
-            }
-
-            const birthDate = new Date(birthdayValue);
-            const today = new Date();
-
-            // التحقق من أن التاريخ ليس في المستقبل
-            if (birthDate > today) {
-                errorMsg.style.display = 'block';
-                errorMsg.textContent = '⚠️ تاريخ الميلاد لا يمكن أن يكون في المستقبل!';
-                resultBox.innerHTML = `<div class="placeholder">🤔 يبدو أنكِ لم تولدي بعد!</div>`;
-                return;
-            }
-
-            // حساب الفرق
-            let years = today.getFullYear() - birthDate.getFullYear();
-            let months = today.getMonth() - birthDate.getMonth();
-            let days = today.getDate() - birthDate.getDate();
-
-            // تصحيح الأشهر والأيام
-            if (days < 0) {
-                months--;
-                // حساب عدد الأيام في الشهر السابق
-                const previousMonth = new Date(today.getFullYear(), today.getMonth(), 0);
-                days += previousMonth.getDate();
-            }
-
-            if (months < 0) {
-                years--;
-                months += 12;
-            }
-
-            // عرض النتيجة المخصصة
-            let ageText = '';
-            if (years === 0 && months === 0 && days === 0) {
-                ageText = '🎉 اليوم هو عيد ميلادكِ! كل عام وأنتِ بخير يا خلود! 🎂';
-            } else {
-                ageText = `
-                    <div class="age-number">${years} سنة</div>
-                    <div class="age-details">و ${months} شهراً و ${days} يوماً</div>
-                    <div style="margin-top:10px; font-size:15px; color:#7b4b8a;">🧮 عمرك بالشهور: ${(years * 12) + months} شهراً</div>
-                `;
-            }
-
-            resultBox.innerHTML = ageText;
-            // إعادة ضبط نص الخطأ إذا كان ظاهراً
-            errorMsg.textContent = '⚠️ يرجى إدخال تاريخ ميلاد صحيح!';
-        }
-
-        // إضافة حدث عند الضغط على Enter في حقل الإدخال
-        document.getElementById('birthday').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                calculateAge();
-            }
-        });
-
-        // تعيين حد أقصى للتاريخ تلقائياً (ليس ضرورياً لكنه مفيد)
-        document.addEventListener('DOMContentLoaded', function() {
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('birthday').setAttribute('max', today);
-        });
-    </script>
-
-</body>
-</html>
-<script type="text/javascript">
-(function() {
-
-})();
+codeInput.addEventListener('keypress', e => {
+  if(e.key === 'Enter') searchStudent();
+});
 </script>
+
 </body>
-</html>
+    </html>
